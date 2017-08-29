@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }} </title>
+</head>
+<body>
+
+    {# sample nav menu jinja code #}
+    <ul id="navigation">
+    {% for item in navigation %}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h1>{{ title }}</h1>
+
+    {# tag list #}
+    <h3>{% for tag in tags %}
+    <li><a href="tag/{{ tag }}.html">{{ tag }}</a></li>
+    {% endfor %}</h3>
+
+    Published {{ date }}
+
+    {# the actual post content from the markdown file #}
+    {{ html }}
+
+    {# a comment #}
+
+</body>
+</html>
