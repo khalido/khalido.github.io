@@ -1,0 +1,19 @@
+project:
+  type: website
+
+website:
+  title: "khalido.org"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/khalido
+      - icon: twitter
+        href: https://twitter.com/KO
+format:
+  html:
+    theme: flatly
+    css: styles.css
+
+
+

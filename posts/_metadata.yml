@@ -1,0 +1,20 @@
+# options specified here will apply to all posts in this folder
+
+# freeze computational output
+# (see https://quarto.org/docs/projects/code-execution.html#freeze)
+freeze: auto
+
+# Enable banner style title blocks
+title-block-banner: true
+
+# Author name of all blog posts
+author: 'KO'
+
+# Table of content settings
+toc: true
+toc-depth: 3
+
+# collapse code cells by default
+code-fold: true
+# show an option in the top right header to hide/show all code cells
+code-tools: true
