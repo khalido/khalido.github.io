@@ -1,4 +1,6 @@
+# packages used in notebooks which are
+# rendered by a github action
 matplotlib
-seaborn
+#seaborn
 pandas
 numpy
