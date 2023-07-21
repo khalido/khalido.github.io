@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -91,6 +92,7 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -107,26 +109,29 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">khalido.org</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/khalido"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/khalido" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/KO"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/KO" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -143,6 +148,7 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-meta">
 
       
+    
       
     </div>
     
@@ -152,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(65)</span></div><div class="category" data-category="apps">apps <span class="quarto-category-count">(2)</span></div><div class="category" data-category="australia">australia <span class="quarto-category-count">(1)</span></div><div class="category" data-category="books">books <span class="quarto-category-count">(14)</span></div><div class="category" data-category="chromebooks">chromebooks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="climate">climate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="climate change">climate change <span class="quarto-category-count">(1)</span></div><div class="category" data-category="courses">courses <span class="quarto-category-count">(7)</span></div><div class="category" data-category="data science">data science <span class="quarto-category-count">(6)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="energy">energy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fitness">fitness <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hikes">hikes <span class="quarto-category-count">(1)</span></div><div class="category" data-category="history">history <span class="quarto-category-count">(1)</span></div><div class="category" data-category="india">india <span class="quarto-category-count">(1)</span></div><div class="category" data-category="iot">iot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="jupyter">jupyter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="linux">linux <span class="quarto-category-count">(2)</span></div><div class="category" data-category="mac">mac <span class="quarto-category-count">(1)</span></div><div class="category" data-category="meetup">meetup <span class="quarto-category-count">(5)</span></div><div class="category" data-category="ml">ml <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nonfiction">nonfiction <span class="quarto-category-count">(6)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(8)</span></div><div class="category" data-category="recipes">recipes <span class="quarto-category-count">(16)</span></div><div class="category" data-category="science fiction">science fiction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sri lanka">sri lanka <span class="quarto-category-count">(1)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sydney">sydney <span class="quarto-category-count">(1)</span></div><div class="category" data-category="webdev">webdev <span class="quarto-category-count">(2)</span></div><div class="category" data-category="windows">windows <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(67)</span></div><div class="category" data-category="algorithims">algorithims <span class="quarto-category-count">(2)</span></div><div class="category" data-category="apps">apps <span class="quarto-category-count">(2)</span></div><div class="category" data-category="australia">australia <span class="quarto-category-count">(1)</span></div><div class="category" data-category="books">books <span class="quarto-category-count">(14)</span></div><div class="category" data-category="chromebooks">chromebooks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="climate">climate <span class="quarto-category-count">(1)</span></div><div class="category" data-category="climate change">climate change <span class="quarto-category-count">(1)</span></div><div class="category" data-category="courses">courses <span class="quarto-category-count">(7)</span></div><div class="category" data-category="data science">data science <span class="quarto-category-count">(6)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="energy">energy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="fitness">fitness <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hikes">hikes <span class="quarto-category-count">(1)</span></div><div class="category" data-category="history">history <span class="quarto-category-count">(1)</span></div><div class="category" data-category="india">india <span class="quarto-category-count">(1)</span></div><div class="category" data-category="iot">iot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="jupyter">jupyter <span class="quarto-category-count">(1)</span></div><div class="category" data-category="linux">linux <span class="quarto-category-count">(2)</span></div><div class="category" data-category="mac">mac <span class="quarto-category-count">(1)</span></div><div class="category" data-category="meetup">meetup <span class="quarto-category-count">(5)</span></div><div class="category" data-category="ml">ml <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nonfiction">nonfiction <span class="quarto-category-count">(6)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(11)</span></div><div class="category" data-category="recipes">recipes <span class="quarto-category-count">(16)</span></div><div class="category" data-category="science fiction">science fiction <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sri lanka">sri lanka <span class="quarto-category-count">(1)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sydney">sydney <span class="quarto-category-count">(1)</span></div><div class="category" data-category="webdev">webdev <span class="quarto-category-count">(2)</span></div><div class="category" data-category="windows">windows <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -165,29 +171,32 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1661644800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.135">
+<div class="quarto-post image-right" data-index="0" data-categories="python" data-listing-date-sort="1661644800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/code/notebook.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/code/notebook.html"></a></p>
+<p><a href="./posts/code/quarto_notebook_test.html"> <p class="card-img-top"><img src="posts/code/quarto_notebook_test_files/figure-html/fig-polar-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
-<a href="./posts/code/notebook.html">
+<a href="./posts/code/quarto_notebook_test.html">
 <h3 class="no-anchor listing-title">
-Jupyter notebook test
+Quarto Jupyter notebook test
 </h3>
 <div class="listing-subtitle">
 
 </div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+</div>
+<a href="./posts/code/quarto_notebook_test.html">
 <div class="listing-description">
 For a demonstration of a line plot on a polar axis, see Figure&nbsp;1.
 </div>
 </a>
 </div>
 <div class="metadata">
-<a href="./posts/code/notebook.html">
+<a href="./posts/code/quarto_notebook_test.html">
 <div class="listing-date">
 Aug 28, 2022
 </div>
@@ -197,13 +206,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="books,nonfiction" data-listing-date-sort="1650499200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.805">
+<div class="quarto-post image-right" data-index="1" data-categories="books,nonfiction" data-listing-date-sort="1650499200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/the-naked-dont-fear-the-water.md.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/the-naked-dont-fear-the-water.md.html"></a></p>
+<p><a href="./posts/reading/the-naked-dont-fear-the-water.md.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/the-naked-dont-fear-the-water.md.html">
@@ -239,13 +244,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="recipes" data-listing-date-sort="1646092800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="2.38">
+<div class="quarto-post image-right" data-index="2" data-categories="recipes" data-listing-date-sort="1646092800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/recipes/biryani.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/biryani.html"></a></p>
+<p><a href="./posts/recipes/biryani.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/biryani.html">
@@ -278,13 +279,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="recipes" data-listing-date-sort="1646092800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.655">
+<div class="quarto-post image-right" data-index="3" data-categories="recipes" data-listing-date-sort="1646092800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/zuchinni-pasta.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/zuchinni-pasta.html"></a></p>
+<p><a href="./posts/recipes/zuchinni-pasta.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/zuchinni-pasta.html">
@@ -317,13 +314,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="books,india" data-listing-date-sort="1646006400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.27">
+<div class="quarto-post image-right" data-index="4" data-categories="books,india" data-listing-date-sort="1646006400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/ghachar-ghochar.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/ghachar-ghochar.html"></a></p>
+<p><a href="./posts/reading/ghachar-ghochar.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/ghachar-ghochar.html">
@@ -359,55 +352,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="books,climate" data-listing-date-sort="1642550400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.075">
+<div class="quarto-post image-right" data-index="5" data-categories="books,sri lanka" data-listing-date-sort="1642550400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/termination-shock.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/termination-shock.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/reading/termination-shock.html">
-<h3 class="no-anchor listing-title">
-Termination Shock
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('books'); return false;">
-books
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('climate'); return false;">
-climate
-</div>
-</div>
-<a href="./posts/reading/termination-shock.html">
-<div class="listing-description">
-This is a book about climate change, all hung about on characters. Now Neal is great at learning things and telling them to you, and I’ve enjoyed his earlier works, info dumps and all. I like fantastical characters, like Jack, Eliza and Enoch Root in the Baroque Cycle, but this book… has a lot of ideas and interesting exposition on how a thing could practically happen, but don’t read it for the ppl.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/reading/termination-shock.html">
-<div class="listing-date">
-Jan 19, 2022
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="books,sri lanka" data-listing-date-sort="1642550400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.87">
-<div class="thumbnail">
-<a href="./posts/reading/a-passage-north.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/a-passage-north.html"></a></p>
+<p><a href="./posts/reading/a-passage-north.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/a-passage-north.html">
@@ -443,13 +390,47 @@ Anuk Arudpragasam
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="recipes" data-listing-date-sort="1642032000000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.475">
+<div class="quarto-post image-right" data-index="6" data-categories="books,climate" data-listing-date-sort="1642550400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/recipes/aloo-keema.html">
-<div class="thumbnail-image">
+<p><a href="./posts/reading/termination-shock.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/reading/termination-shock.html">
+<h3 class="no-anchor listing-title">
+Termination Shock
+</h3>
+<div class="listing-subtitle">
 
 </div>
-</a><p><a href="./posts/recipes/aloo-keema.html"></a></p>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('books'); return false;">
+books
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('climate'); return false;">
+climate
+</div>
+</div>
+<a href="./posts/reading/termination-shock.html">
+<div class="listing-description">
+This is a book about climate change, all hung about on characters. Now Neal is great at learning things and telling them to you, and I’ve enjoyed his earlier works, info…
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/reading/termination-shock.html">
+<div class="listing-date">
+Jan 19, 2022
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="recipes" data-listing-date-sort="1642032000000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./posts/recipes/aloo-keema.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/aloo-keema.html">
@@ -482,13 +463,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="recipes" data-listing-date-sort="1639440000000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.995">
+<div class="quarto-post image-right" data-index="8" data-categories="recipes" data-listing-date-sort="1639440000000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/Aloo Anda ka salan.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/Aloo Anda ka salan.html"></a></p>
+<p><a href="./posts/recipes/Aloo Anda ka salan.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/Aloo Anda ka salan.html">
@@ -521,13 +498,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="recipes" data-listing-date-sort="1638403200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.54">
+<div class="quarto-post image-right" data-index="9" data-categories="recipes" data-listing-date-sort="1638403200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/bhaigan-ka-bhurta.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/bhaigan-ka-bhurta.html"></a></p>
+<p><a href="./posts/recipes/bhaigan-ka-bhurta.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/bhaigan-ka-bhurta.html">
@@ -560,13 +533,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="recipes" data-listing-date-sort="1638403200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.715">
+<div class="quarto-post image-right" data-index="10" data-categories="recipes" data-listing-date-sort="1638403200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/khata-bhaigan.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/khata-bhaigan.html"></a></p>
+<p><a href="./posts/recipes/khata-bhaigan.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/khata-bhaigan.html">
@@ -599,13 +568,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="books,history" data-listing-date-sort="1634601600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.555">
+<div class="quarto-post image-right" data-index="11" data-categories="books,history" data-listing-date-sort="1634601600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/indian-summer.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/indian-summer.html"></a></p>
+<p><a href="./posts/reading/indian-summer.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/indian-summer.html">
@@ -641,13 +606,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="books,nonfiction" data-listing-date-sort="1631577600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="2.045">
+<div class="quarto-post image-right" data-index="12" data-categories="books,nonfiction" data-listing-date-sort="1631577600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/reading/the-key-man.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/the-key-man.html"></a></p>
+<p><a href="./posts/reading/the-key-man.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/the-key-man.html">
@@ -683,13 +644,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="webdev" data-listing-date-sort="1629763200000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="5.61">
+<div class="quarto-post image-right" data-index="13" data-categories="webdev" data-listing-date-sort="1629763200000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/sveltekit_tailwindcss.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/sveltekit_tailwindcss.html"></a></p>
+<p><a href="./posts/writing-about-code/sveltekit_tailwindcss.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/sveltekit_tailwindcss.html">
@@ -722,13 +679,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="webdev" data-listing-date-sort="1628294400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.79">
+<div class="quarto-post image-right" data-index="14" data-categories="webdev" data-listing-date-sort="1628294400000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/tailwindcss.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/tailwindcss.html"></a></p>
+<p><a href="./posts/writing-about-code/tailwindcss.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/tailwindcss.html">
@@ -746,7 +699,7 @@ webdev
 </div>
 <a href="./posts/writing-about-code/tailwindcss.html">
 <div class="listing-description">
-CSS makes sense, I mean, who doesn’t want to seperate styling from code? Semantic html has been the web’s dream for a long time, but over time as web browsers became operating systems css has grown into a hugely complex kludge of a tool.
+CSS makes sense, I mean, who doesn’t want to seperate…
 </div>
 </a>
 </div>
@@ -761,13 +714,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="hikes,sydney" data-listing-date-sort="1628208000000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.22">
+<div class="quarto-post image-right" data-index="15" data-categories="hikes,sydney" data-listing-date-sort="1628208000000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/kid-friendly-hikes-in-sydney.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/kid-friendly-hikes-in-sydney.html"></a></p>
+<p><a href="./posts/kid-friendly-hikes-in-sydney.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/kid-friendly-hikes-in-sydney.html">
@@ -803,13 +752,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="recipes" data-listing-date-sort="1628035200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.675">
+<div class="quarto-post image-right" data-index="16" data-categories="recipes" data-listing-date-sort="1628035200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/aloo-sabzi.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/aloo-sabzi.html"></a></p>
+<p><a href="./posts/recipes/aloo-sabzi.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/aloo-sabzi.html">
@@ -842,13 +787,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="recipes" data-listing-date-sort="1627862400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.765">
+<div class="quarto-post image-right" data-index="17" data-categories="recipes" data-listing-date-sort="1627862400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/mung-sprouts-salad.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/mung-sprouts-salad.html"></a></p>
+<p><a href="./posts/recipes/mung-sprouts-salad.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/mung-sprouts-salad.html">
@@ -881,13 +822,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="mac" data-listing-date-sort="1627257600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.01">
+<div class="quarto-post image-right" data-index="18" data-categories="mac" data-listing-date-sort="1627257600000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/setup-mac.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/setup-mac.html"></a></p>
+<p><a href="./posts/writing-about-code/setup-mac.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/setup-mac.html">
@@ -920,13 +857,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="books,nonfiction,climate change" data-listing-date-sort="1625702400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.23">
+<div class="quarto-post image-right" data-index="19" data-categories="books,nonfiction,climate change" data-listing-date-sort="1625702400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/the_uninhabitable_earth.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/the_uninhabitable_earth.html"></a></p>
+<p><a href="./posts/reading/the_uninhabitable_earth.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/the_uninhabitable_earth.html">
@@ -951,7 +884,7 @@ climate change
 <a href="./posts/reading/the_uninhabitable_earth.html">
 <div class="listing-description">
 
-It’s a awesome political, economical and yes, climate overview of the planet and where its headed. Too much of future looking literature really holds its tongue. This is a no holds barred overview.
+It’s a awesome…
 </div>
 </a>
 </div>
@@ -966,13 +899,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="books,nonfiction,australia" data-listing-date-sort="1625702400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.3">
+<div class="quarto-post image-right" data-index="20" data-categories="books,nonfiction,australia" data-listing-date-sort="1625702400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/reading/too_migrant_too_muslim_too_loud.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/too_migrant_too_muslim_too_loud.html"></a></p>
+<p><a href="./posts/reading/too_migrant_too_muslim_too_loud.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/too_migrant_too_muslim_too_loud.html">
@@ -1011,13 +940,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="books,energy" data-listing-date-sort="1622592000000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="4.765">
+<div class="quarto-post image-right" data-index="21" data-categories="books,energy" data-listing-date-sort="1622592000000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <div class="thumbnail">
-<a href="./posts/reading/getting_to_zero.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/getting_to_zero.html"></a></p>
+<p><a href="./posts/reading/getting_to_zero.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/getting_to_zero.html">
@@ -1038,7 +963,7 @@ energy
 </div>
 <a href="./posts/reading/getting_to_zero.html">
 <div class="listing-description">
-This QE gently and clearly explains the current scientific consensus on global warming and that it is an urgent crisis which Australia needs to tackle. It then lays out specific ways using today’s tech (solar, wind, storage and gas) by which the transition can occur.
+This QE gently and clearly explains the current scientific consensus on global warming and that…
 </div>
 </a>
 </div>
@@ -1053,13 +978,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="iot" data-listing-date-sort="1610928000000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="1.285">
+<div class="quarto-post image-right" data-index="22" data-categories="iot" data-listing-date-sort="1610928000000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/esp32-eink.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/esp32-eink.html"></a></p>
+<p><a href="./posts/writing-about-code/esp32-eink.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/esp32-eink.html">
@@ -1092,13 +1013,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="iot" data-listing-date-sort="1610064000000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="6.65">
+<div class="quarto-post image-right" data-index="23" data-categories="iot" data-listing-date-sort="1610064000000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/esp8266.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/esp8266.html"></a></p>
+<p><a href="./posts/writing-about-code/esp8266.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/esp8266.html">
@@ -1131,13 +1048,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-categories="python" data-listing-date-sort="1609545600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="1.75">
+<div class="quarto-post image-right" data-index="24" data-categories="python" data-listing-date-sort="1609545600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/anaconda.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/anaconda.html"></a></p>
+<p><a href="./posts/writing-about-code/anaconda.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/anaconda.html">
@@ -1170,9 +1083,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="25" data-categories="fitness" data-listing-date-sort="1606608000000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="8.905">
+<div class="quarto-post image-right" data-index="25" data-categories="fitness" data-listing-date-sort="1606608000000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
 <div class="thumbnail">
-<p><a href="./posts/exercise.html"> <img data-src="http://i.imgur.com/SKruJBF.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/exercise.html"> <p class="card-img-top"><img data-src="http://i.imgur.com/SKruJBF.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/exercise.html">
@@ -1205,13 +1118,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="26" data-categories="python" data-listing-date-sort="1605052800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="6.365">
+<div class="quarto-post image-right" data-index="26" data-categories="python" data-listing-date-sort="1605052800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/building_this_blog.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/building_this_blog.html"></a></p>
+<p><a href="./posts/writing-about-code/building_this_blog.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/building_this_blog.html">
@@ -1229,7 +1138,7 @@ python
 </div>
 <a href="./posts/writing-about-code/building_this_blog.html">
 <div class="listing-description">
-There are many excellent blog engines out there, but to customise any of them takes so much understanding of how they work, the template and theme engines they use, that its easier to just use them exactly as is with an existing theme.
+There are many excellent blog engines out there, but to…
 </div>
 </a>
 </div>
@@ -1244,13 +1153,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="27" data-categories="windows" data-listing-date-sort="1603843200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.785">
+<div class="quarto-post image-right" data-index="27" data-categories="windows" data-listing-date-sort="1603843200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/windows.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/windows.html"></a></p>
+<p><a href="./posts/windows.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/windows.html">
@@ -1283,13 +1188,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="28" data-categories="books,science fiction" data-listing-date-sort="1603065600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.435">
+<div class="quarto-post image-right" data-index="28" data-categories="books,science fiction" data-listing-date-sort="1603065600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/three-body-problem.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/three-body-problem.html"></a></p>
+<p><a href="./posts/reading/three-body-problem.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/three-body-problem.html">
@@ -1310,7 +1211,7 @@ science fiction
 </div>
 <a href="./posts/reading/three-body-problem.html">
 <div class="listing-description">
-So many ideas. It’s my favourite first contact book. While some of the ideas might be over the top, they keep coming. Whats really impressive is that this is just book 1 of a trilogy and the ideas keep going.
+So many ideas. It’s my…
 </div>
 </a>
 </div>
@@ -1325,13 +1226,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="29" data-categories="recipes" data-listing-date-sort="1599868800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.68">
+<div class="quarto-post image-right" data-index="29" data-categories="recipes" data-listing-date-sort="1599868800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/kheera-raita.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/kheera-raita.html"></a></p>
+<p><a href="./posts/recipes/kheera-raita.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/kheera-raita.html">
@@ -1364,13 +1261,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="30" data-categories="recipes" data-listing-date-sort="1599868800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.14">
+<div class="quarto-post image-right" data-index="30" data-categories="recipes" data-listing-date-sort="1599868800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/recipes/urud-dhal.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/urud-dhal.html"></a></p>
+<p><a href="./posts/recipes/urud-dhal.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/urud-dhal.html">
@@ -1403,13 +1296,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="31" data-categories="recipes" data-listing-date-sort="1599177600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.135">
+<div class="quarto-post image-right" data-index="31" data-categories="recipes" data-listing-date-sort="1599177600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/recipes/spicychickpeas.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/spicychickpeas.html"></a></p>
+<p><a href="./posts/recipes/spicychickpeas.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/spicychickpeas.html">
@@ -1442,38 +1331,37 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="32" data-categories="recipes" data-listing-date-sort="1596499200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.045">
+<div class="quarto-post image-right" data-index="32" data-categories="algorithims,python" data-listing-date-sort="1597017600000" data-listing-file-modified-sort="1689916668702" data-listing-date-modified-sort="1613260800000" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/recipes/vegan-shami-kebab.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/vegan-shami-kebab.html"></a></p>
+<p><a href="./posts/code/advent-of-code-2015/index.html"> <p class="card-img-top"><img data-src="posts/code/advent-of-code-2015/index_files/figure-html/cell-6-output-2.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
-<a href="./posts/recipes/vegan-shami-kebab.html">
+<a href="./posts/code/advent-of-code-2015/index.html">
 <h3 class="no-anchor listing-title">
-Vegan Shami kebab
+Advent of Code 2015
 </h3>
 <div class="listing-subtitle">
 
 </div>
 </a>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
-recipes
+<div class="listing-category" onclick="window.quartoListingCategory('algorithims'); return false;">
+algorithims
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
 </div>
 </div>
-<a href="./posts/recipes/vegan-shami-kebab.html">
+<a href="./posts/code/advent-of-code-2015/index.html">
 <div class="listing-description">
-Makes kebabs for frying or grilling. Goes well in burgers.
+<p>a verbose solve of AOC 2015</p>
 </div>
 </a>
 </div>
 <div class="metadata">
-<a href="./posts/recipes/vegan-shami-kebab.html">
+<a href="./posts/code/advent-of-code-2015/index.html">
 <div class="listing-date">
-Aug 4, 2020
+Aug 10, 2020
 </div>
 <div class="listing-author">
 KO
@@ -1481,13 +1369,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="33" data-categories="recipes" data-listing-date-sort="1596499200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.665">
+<div class="quarto-post image-right" data-index="33" data-categories="recipes" data-listing-date-sort="1596499200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/recipes/daal-sprouts.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/daal-sprouts.html"></a></p>
+<p><a href="./posts/recipes/daal-sprouts.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/recipes/daal-sprouts.html">
@@ -1520,13 +1404,44 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="34" data-categories="apps" data-listing-date-sort="1570665600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.875">
+<div class="quarto-post image-right" data-index="34" data-categories="recipes" data-listing-date-sort="1596499200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/vs_code.html">
-<div class="thumbnail-image">
+<p><a href="./posts/recipes/vegan-shami-kebab.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/recipes/vegan-shami-kebab.html">
+<h3 class="no-anchor listing-title">
+Vegan Shami kebab
+</h3>
+<div class="listing-subtitle">
 
 </div>
-</a><p><a href="./posts/vs_code.html"></a></p>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
+recipes
+</div>
+</div>
+<a href="./posts/recipes/vegan-shami-kebab.html">
+<div class="listing-description">
+Makes kebabs for frying or grilling. Goes well in burgers.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/recipes/vegan-shami-kebab.html">
+<div class="listing-date">
+Aug 4, 2020
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="35" data-categories="apps" data-listing-date-sort="1570665600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="thumbnail">
+<p><a href="./posts/vs_code.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/vs_code.html">
@@ -1559,13 +1474,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="35" data-categories="python" data-listing-date-sort="1568937600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="31.15">
+<div class="quarto-post image-right" data-index="36" data-categories="python" data-listing-date-sort="1568937600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="32">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/PyConAu2019.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/PyConAu2019.html"></a></p>
+<p><a href="./posts/writing-about-code/PyConAu2019.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/PyConAu2019.html">
@@ -1598,130 +1509,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="36" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.575">
+<div class="quarto-post image-right" data-index="37" data-categories="jupyter" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/recipes/daal.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/daal.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/recipes/daal.html">
-<h3 class="no-anchor listing-title">
-Daal (lentils)
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
-recipes
-</div>
-</div>
-<a href="./posts/recipes/daal.html">
-<div class="listing-description">
-A simple daal recipe.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/recipes/daal.html">
-<div class="listing-date">
-Aug 4, 2019
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="37" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.99">
-<div class="thumbnail">
-<a href="./posts/recipes/paneer-karhai.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/paneer-karhai.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/recipes/paneer-karhai.html">
-<h3 class="no-anchor listing-title">
-Paneer Karhai
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
-recipes
-</div>
-</div>
-<a href="./posts/recipes/paneer-karhai.html">
-<div class="listing-description">
-Home made recipe from FDT. This is a basic desi karhai receipe which can be used as the base for anything.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/recipes/paneer-karhai.html">
-<div class="listing-date">
-Aug 4, 2019
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="38" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.595">
-<div class="thumbnail">
-<a href="./posts/recipes/omelette.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/recipes/omelette.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/recipes/omelette.html">
-<h3 class="no-anchor listing-title">
-Desi Omelette
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
-recipes
-</div>
-</div>
-<a href="./posts/recipes/omelette.html">
-<div class="listing-description">
-I love cheese, but it has no place in a true desi omelette.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/recipes/omelette.html">
-<div class="listing-date">
-Aug 4, 2019
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="39" data-categories="jupyter" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.21">
-<div class="thumbnail">
-<a href="./posts/writing-about-code/jupyterlab.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/jupyterlab.html"></a></p>
+<p><a href="./posts/writing-about-code/jupyterlab.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/jupyterlab.html">
@@ -1754,13 +1544,114 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="40" data-categories="books,statistics" data-listing-date-sort="1557014400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.255">
+<div class="quarto-post image-right" data-index="38" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/stats-done-wrong-book.html">
-<div class="thumbnail-image">
+<p><a href="./posts/recipes/omelette.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/recipes/omelette.html">
+<h3 class="no-anchor listing-title">
+Desi Omelette
+</h3>
+<div class="listing-subtitle">
 
 </div>
-</a><p><a href="./posts/reading/stats-done-wrong-book.html"></a></p>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
+recipes
+</div>
+</div>
+<a href="./posts/recipes/omelette.html">
+<div class="listing-description">
+I love cheese, but it has no place in a true desi omelette.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/recipes/omelette.html">
+<div class="listing-date">
+Aug 4, 2019
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="39" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="thumbnail">
+<p><a href="./posts/recipes/paneer-karhai.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/recipes/paneer-karhai.html">
+<h3 class="no-anchor listing-title">
+Paneer Karhai
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
+recipes
+</div>
+</div>
+<a href="./posts/recipes/paneer-karhai.html">
+<div class="listing-description">
+Home made recipe from FDT. This is a basic desi karhai receipe which can be used as the base for anything.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/recipes/paneer-karhai.html">
+<div class="listing-date">
+Aug 4, 2019
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="40" data-categories="recipes" data-listing-date-sort="1564876800000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./posts/recipes/daal.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/recipes/daal.html">
+<h3 class="no-anchor listing-title">
+Daal (lentils)
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('recipes'); return false;">
+recipes
+</div>
+</div>
+<a href="./posts/recipes/daal.html">
+<div class="listing-description">
+A simple daal recipe.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/recipes/daal.html">
+<div class="listing-date">
+Aug 4, 2019
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="41" data-categories="books,statistics" data-listing-date-sort="1557014400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="thumbnail">
+<p><a href="./posts/reading/stats-done-wrong-book.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/stats-done-wrong-book.html">
@@ -1781,7 +1672,7 @@ statistics
 </div>
 <a href="./posts/reading/stats-done-wrong-book.html">
 <div class="listing-description">
-This is a great statistics primer - Alex Reinhart explains commonly used statistical techniques in use by not just showing how ppl make mistakes, but by explaining them in simple english which actually makes sense, unlike most “real” statistics books.
+This is a great statistics primer - Alex Reinhart explains commonly used…
 </div>
 </a>
 </div>
@@ -1796,13 +1687,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="41" data-categories="data science" data-listing-date-sort="1551657600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.575">
+<div class="quarto-post image-right" data-index="42" data-categories="data science" data-listing-date-sort="1551657600000" data-listing-file-modified-sort="1689916668702" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/blogs-i-like.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/blogs-i-like.html"></a></p>
+<p><a href="./posts/blogs-i-like.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/blogs-i-like.html">
@@ -1835,13 +1722,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="42" data-categories="ml" data-listing-date-sort="1551484800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="10.875">
+<div class="quarto-post image-right" data-index="43" data-categories="ml" data-listing-date-sort="1551484800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/google-ml-best-practice.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/google-ml-best-practice.html"></a></p>
+<p><a href="./posts/writing-about-code/google-ml-best-practice.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/google-ml-best-practice.html">
@@ -1874,13 +1757,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="43" data-categories="python" data-listing-date-sort="1549065600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="4.75">
+<div class="quarto-post image-right" data-index="44" data-categories="python" data-listing-date-sort="1549065600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/advent-of-code-2016.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/advent-of-code-2016.html"></a></p>
+<p><a href="./posts/writing-about-code/advent-of-code-2016.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/advent-of-code-2016.html">
@@ -1913,87 +1792,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="44" data-categories="linux" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.135">
+<div class="quarto-post image-right" data-index="45" data-categories="courses,python" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/setup-ubuntu.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/setup-ubuntu.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/writing-about-code/setup-ubuntu.html">
-<h3 class="no-anchor listing-title">
-Setup Linux
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('linux'); return false;">
-linux
-</div>
-</div>
-<a href="./posts/writing-about-code/setup-ubuntu.html">
-<div class="listing-description">
-<p>setup notes for debian/ubuntu</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/writing-about-code/setup-ubuntu.html">
-<div class="listing-date">
-Sep 20, 2018
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="45" data-categories="python" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="46.68">
-<div class="thumbnail">
-<p><a href="./posts/writing-about-code/PyConAu2018.html"> <img data-src="./posts/writing-about-code" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/writing-about-code/PyConAu2018.html">
-<h3 class="no-anchor listing-title">
-PyCon Australia 2018
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
-python
-</div>
-</div>
-<a href="./posts/writing-about-code/PyConAu2018.html">
-<div class="listing-description">
-<p>Notes for PyconAU 2018.</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/writing-about-code/PyConAu2018.html">
-<div class="listing-date">
-Sep 20, 2018
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="46" data-categories="courses,python" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="0.77">
-<div class="thumbnail">
-<a href="./posts/writing-about-code/mitx6002x.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/mitx6002x.html"></a></p>
+<p><a href="./posts/writing-about-code/mitx6002x.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/mitx6002x.html">
@@ -2029,13 +1830,79 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="47" data-categories="meetup,data science" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="3.51">
+<div class="quarto-post image-right" data-index="46" data-categories="python" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="47">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/sml-meetup-2018-09.html">
-<div class="thumbnail-image">
+<p><a href="./posts/writing-about-code/PyConAu2018.html"> <p class="card-img-top"><img data-src="posts/writing-about-code/.png" alt="#"  class="thumbnail-image card-img"/></p> </a></p>
+</div>
+<div class="body">
+<a href="./posts/writing-about-code/PyConAu2018.html">
+<h3 class="no-anchor listing-title">
+PyCon Australia 2018
+</h3>
+<div class="listing-subtitle">
 
 </div>
-</a><p><a href="./posts/writing-about-code/sml-meetup-2018-09.html"></a></p>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+</div>
+<a href="./posts/writing-about-code/PyConAu2018.html">
+<div class="listing-description">
+<p>Notes for PyconAU 2018.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/writing-about-code/PyConAu2018.html">
+<div class="listing-date">
+Sep 20, 2018
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="47" data-categories="linux" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="thumbnail">
+<p><a href="./posts/writing-about-code/setup-ubuntu.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./posts/writing-about-code/setup-ubuntu.html">
+<h3 class="no-anchor listing-title">
+Setup Linux
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('linux'); return false;">
+linux
+</div>
+</div>
+<a href="./posts/writing-about-code/setup-ubuntu.html">
+<div class="listing-description">
+<p>setup notes for debian/ubuntu</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/writing-about-code/setup-ubuntu.html">
+<div class="listing-date">
+Sep 20, 2018
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="48" data-categories="meetup,data science" data-listing-date-sort="1537401600000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="./posts/writing-about-code/sml-meetup-2018-09.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/sml-meetup-2018-09.html">
@@ -2071,13 +1938,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="48" data-categories="chromebooks,linux" data-listing-date-sort="1535068800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="5.085">
+<div class="quarto-post image-right" data-index="49" data-categories="chromebooks,linux" data-listing-date-sort="1535068800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/setup-crostini-chromebook.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/setup-crostini-chromebook.html"></a></p>
+<p><a href="./posts/writing-about-code/setup-crostini-chromebook.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/setup-crostini-chromebook.html">
@@ -2098,7 +1961,7 @@ linux
 </div>
 <a href="./posts/writing-about-code/setup-crostini-chromebook.html">
 <div class="listing-description">
-ChromeOS supports a built in Linux - running inside a container running insde a VM. Turn it on by going to settings and pressing the on button for Linux (beta). This gives us a bare bones Linux install running Debian 11. So here goes all the things I did to customize it.
+ChromeOS supports a built in Linux - running inside a container running insde a VM. Turn it on…
 </div>
 </a>
 </div>
@@ -2113,13 +1976,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="49" data-categories="meetup,data science" data-listing-date-sort="1534723200000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="6.995">
+<div class="quarto-post image-right" data-index="50" data-categories="meetup,data science" data-listing-date-sort="1534723200000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/sml-meetup.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/sml-meetup.html"></a></p>
+<p><a href="./posts/writing-about-code/sml-meetup.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/sml-meetup.html">
@@ -2155,13 +2014,47 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="50" data-categories="books" data-listing-date-sort="1533686400000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.25">
+<div class="quarto-post image-right" data-index="51" data-categories="algorithims,python" data-listing-date-sort="1533859200000" data-listing-file-modified-sort="1689916668726" data-listing-date-modified-sort="1581638400000" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/reading/grokking-deep-learning-book.html">
-<div class="thumbnail-image">
+<p><a href="./posts/code/flood_fill.html"> <p class="card-img-top"><img data-src="posts/code/flood_fill_files/figure-html/cell-4-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+</div>
+<div class="body">
+<a href="./posts/code/flood_fill.html">
+<h3 class="no-anchor listing-title">
+Floodfill algorithim
+</h3>
+<div class="listing-subtitle">
 
 </div>
-</a><p><a href="./posts/reading/grokking-deep-learning-book.html"></a></p>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('algorithims'); return false;">
+algorithims
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+</div>
+<a href="./posts/code/flood_fill.html">
+<div class="listing-description">
+Flood Fill is a way to to visit every point in a bounded region. This makes it useful for many purposes. In this notebook I implement the “bucket fill” flood fill algo.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/code/flood_fill.html">
+<div class="listing-date">
+Aug 10, 2018
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="52" data-categories="books" data-listing-date-sort="1533686400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./posts/reading/grokking-deep-learning-book.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/grokking-deep-learning-book.html">
@@ -2194,9 +2087,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="51" data-categories="meetup" data-listing-date-sort="1532044800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="5.665">
+<div class="quarto-post image-right" data-index="53" data-categories="meetup" data-listing-date-sort="1532044800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/techfugees-sydney-hackathon-2018.html"> <img data-src="./img/prototype_chat_1.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/techfugees-sydney-hackathon-2018.html"> <p class="card-img-top"><img data-src="img/prototype_chat_1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/techfugees-sydney-hackathon-2018.html">
@@ -2229,13 +2122,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="52" data-categories="meetup" data-listing-date-sort="1531353600000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="6.535">
+<div class="quarto-post image-right" data-index="54" data-categories="meetup" data-listing-date-sort="1531353600000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/dss-meetup.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/dss-meetup.html"></a></p>
+<p><a href="./posts/writing-about-code/dss-meetup.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/dss-meetup.html">
@@ -2268,13 +2157,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="53" data-categories="data science,meetup" data-listing-date-sort="1528934400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.885">
+<div class="quarto-post image-right" data-index="55" data-categories="data science,meetup" data-listing-date-sort="1528934400000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/ms_openhack_2018.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/ms_openhack_2018.html"></a></p>
+<p><a href="./posts/writing-about-code/ms_openhack_2018.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/ms_openhack_2018.html">
@@ -2310,13 +2195,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="54" data-categories="books,nonfiction" data-listing-date-sort="1526169600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="1.23">
+<div class="quarto-post image-right" data-index="56" data-categories="books,nonfiction" data-listing-date-sort="1526169600000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/reading/the_fifth_risk.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/the_fifth_risk.html"></a></p>
+<p><a href="./posts/reading/the_fifth_risk.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/the_fifth_risk.html">
@@ -2337,7 +2218,7 @@ nonfiction
 </div>
 <a href="./posts/reading/the_fifth_risk.html">
 <div class="listing-description">
-This is a awesome read. In many countries, many people have long stopped wondering or caring about how their country actually functions, and this book takes us through a bunch of really useful government functions, from providing food and shelter to the needy to… just about everything you can imagine.
+This is a awesome read. In many countries, many people have long stopped wondering or caring about how their country actually…
 </div>
 </a>
 </div>
@@ -2352,13 +2233,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="55" data-categories="courses,deep learning" data-listing-date-sort="1525478400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="0.575">
+<div class="quarto-post image-right" data-index="57" data-categories="courses,deep learning" data-listing-date-sort="1525478400000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/writing-about-code/fastai-part1-2018.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/fastai-part1-2018.html"></a></p>
+<p><a href="./posts/writing-about-code/fastai-part1-2018.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/fastai-part1-2018.html">
@@ -2394,9 +2271,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="56" data-categories="courses" data-listing-date-sort="1514764800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="20.475">
+<div class="quarto-post image-right" data-index="58" data-categories="courses" data-listing-date-sort="1514764800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/deeplearning-ai-part-3-of-5.html"> <img data-src="./images/deeplearningai-3-of-5-cert.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/deeplearning-ai-part-3-of-5.html"> <img data-src="./images/deeplearningai-3-of-5-cert.png" class="thumbnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/deeplearning-ai-part-3-of-5.html">
@@ -2429,9 +2306,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="57" data-categories="courses,deep learning" data-listing-date-sort="1502755200000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="11.59">
+<div class="quarto-post image-right" data-index="59" data-categories="courses,deep learning" data-listing-date-sort="1502755200000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/udacity-nd101.html"> <img data-src="./images/udacity-nd101-cert.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/udacity-nd101.html"> <img data-src="./images/udacity-nd101-cert.png" class="thumbnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/udacity-nd101.html">
@@ -2467,9 +2344,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="58" data-categories="python,data science" data-listing-date-sort="1491264000000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="28.515">
+<div class="quarto-post image-right" data-index="60" data-categories="python,data science" data-listing-date-sort="1491264000000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="29">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/harvard-cs109-notes.html"> <img data-src="./img/mapreduce.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/harvard-cs109-notes.html"> <p class="card-img-top"><img data-src="img/mapreduce.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/harvard-cs109-notes.html">
@@ -2505,13 +2382,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="59" data-categories="apps" data-listing-date-sort="1489017600000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="0.63">
+<div class="quarto-post image-right" data-index="61" data-categories="apps" data-listing-date-sort="1489017600000" data-listing-file-modified-sort="1689916668702" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
 <div class="thumbnail">
-<a href="./posts/chrome.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/chrome.html"></a></p>
+<p><a href="./posts/chrome.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/chrome.html">
@@ -2544,9 +2417,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="60" data-categories="courses" data-listing-date-sort="1483228800000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="11.4">
+<div class="quarto-post image-right" data-index="62" data-categories="courses" data-listing-date-sort="1483228800000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/deeplearning-ai-part-2-of-5.html"> <img data-src="./imgages/deeplearningai-2-of-5-cert.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/deeplearning-ai-part-2-of-5.html"> <img data-src="./imgages/deeplearningai-2-of-5-cert.png" class="thumbnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/deeplearning-ai-part-2-of-5.html">
@@ -2579,48 +2452,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="61" data-categories="courses" data-listing-date-sort="1451606400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="7.685">
+<div class="quarto-post image-right" data-index="63" data-categories="data science" data-listing-date-sort="1451606400000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html"> <img data-src="./images/deeplearningai-1-of-5-cert.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
-<h3 class="no-anchor listing-title">
-deeplearning.ai: Neural Networks and Deep Learning
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('courses'); return false;">
-courses
-</div>
-</div>
-<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
-<div class="listing-description">
-It had been a while since I finished Udacity’s Deep Learning course, so as a refresher I signed up for Andrew NG’s deeplearning.ai course.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
-<div class="listing-date">
-Jan 1, 2016
-</div>
-<div class="listing-author">
-KO
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="62" data-categories="data science" data-listing-date-sort="1451606400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="2.07">
-<div class="thumbnail">
-<a href="./posts/writing-about-code/apache-spark.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/writing-about-code/apache-spark.html"></a></p>
+<p><a href="./posts/writing-about-code/apache-spark.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/apache-spark.html">
@@ -2653,9 +2487,44 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="63" data-categories="courses,python" data-listing-date-sort="1373414400000" data-listing-file-modified-sort="1663594613701" data-listing-reading-time-sort="0.285">
+<div class="quarto-post image-right" data-index="64" data-categories="courses" data-listing-date-sort="1451606400000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
 <div class="thumbnail">
-<p><a href="./posts/writing-about-code/udacity-cs101.html"> <img data-src="./images/udacity-cs101-cert.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html"> <img data-src="./images/deeplearningai-1-of-5-cert.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
+<h3 class="no-anchor listing-title">
+deeplearning.ai: Neural Networks and Deep Learning
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('courses'); return false;">
+courses
+</div>
+</div>
+<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
+<div class="listing-description">
+It had been a while since I finished Udacity’s Deep Learning course, so as a refresher I signed up for Andrew NG’s deeplearning.ai course.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/writing-about-code/deeplearning-ai-part-1-of-5.html">
+<div class="listing-date">
+Jan 1, 2016
+</div>
+<div class="listing-author">
+KO
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="65" data-categories="courses,python" data-listing-date-sort="1373414400000" data-listing-file-modified-sort="1689916668734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="thumbnail">
+<p><a href="./posts/writing-about-code/udacity-cs101.html"> <img data-src="./images/udacity-cs101-cert.png" class="thumbnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/writing-about-code/udacity-cs101.html">
@@ -2691,13 +2560,9 @@ KO
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="64" data-categories="books,nonfiction" data-listing-date-sort="1368403200000" data-listing-file-modified-sort="1663594613697" data-listing-reading-time-sort="2.885">
+<div class="quarto-post image-right" data-index="66" data-categories="books,nonfiction" data-listing-date-sort="1368403200000" data-listing-file-modified-sort="1689916668730" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="./posts/reading/freedom_at_midnight.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/reading/freedom_at_midnight.html"></a></p>
+<p><a href="./posts/reading/freedom_at_midnight.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="./posts/reading/freedom_at_midnight.html">
@@ -2768,9 +2633,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2782,7 +2661,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2818,24 +2714,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
