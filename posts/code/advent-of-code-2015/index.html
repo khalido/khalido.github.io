@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Advent of Code 2015</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Advent of Code 2015</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
                   <div>
         <div class="description">
           a verbose solve of AOC 2015
@@ -214,14 +214,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>not <a href="https://docs.google.com/presentation/d/1n2RlMdmv1p25Xy5thJUhkKGvjtV-dkAIsUXP-AL4ffI/edit?usp=sharing">mangle up jupyter notebooks too badly</a>. Real code is written using a text editor! Unless you are <a href="https://netflixtechblog.com/notebook-innovation-591ee3221233">Netflix</a>.</li>
 </ul>
 <p>First up, I’m importing all the libs I’ll use up here:</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="45">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># python essentials</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List, NamedTuple</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict, namedtuple, Counter</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># useful external libs</span></span>
@@ -235,59 +237,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># for plots, cause visuals</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt <span class="co"># goto python viz lib</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns <span class="co"># prettify matplotlib</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#import seaborn as sns # prettify matplotlib</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># javascript plotting for interactive graphs</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#import altair as alt</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#import plotly.express as px</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Some helper functions to avoid rewriting the same code for all the problems:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>input_path <span class="op">=</span> Path.home() <span class="op">/</span> <span class="st">"code"</span> <span class="op">/</span> <span class="st">"adventofcode"</span> <span class="op">/</span> <span class="st">"inputs"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>github_url <span class="op">=</span> url <span class="op">=</span> <span class="st">"https://github.com/khalido/adventofcode/raw/master/inputs"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_input(day:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, year:<span class="bu">int</span><span class="op">=</span><span class="dv">2015</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""takes in the day, year and date, returns the input"""</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:    <span class="co"># load from local disk</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(input_path <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">"</span> <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">.txt"</span>) <span class="im">as</span> f:</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> f.read()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>: <span class="co"># else load from github repo</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to load </span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">.txt from disk, trying to get from github"</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>github_url<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">.txt"</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> requests.get(url)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> r.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> r.text</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Failed to load </span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data.strip()</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> printmd(txt): display(Markdown(txt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="30">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_input(day:<span class="bu">int</span><span class="op">=</span><span class="dv">1</span>, path<span class="op">=</span><span class="st">"inputs"</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (Path() <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">.txt"</span>).read_text().strip()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Failed to load </span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">.txt from `inputs` subdir."</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> printmd(txt): display(Markdown(txt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="day-1-not-quite-lisp" class="level2">
 <h2 class="anchored" data-anchor-id="day-1-not-quite-lisp">Day 1: Not Quite Lisp</h2>
 <p><a href="https://adventofcode.com/2015/day/1">#</a> We’re standing at a inifinite building, and following instructions:<code>(</code> is up, <code>)</code> is down to find the right floor.</p>
 <p>This is simple - minus the ups from the downs:</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>inp1 <span class="op">=</span> get_input(<span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>inp1.count(<span class="st">"("</span>) <span class="op">-</span> inp1.count(<span class="st">")"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell" data-execution_count="52">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>in1 <span class="op">=</span> get_input(<span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>in1.count(<span class="st">"("</span>) <span class="op">-</span> in1.count(<span class="st">")"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="52">
 <pre><code>138</code></pre>
 </div>
 </div>
 <p>A list comprehension version for kicks:</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([<span class="dv">1</span> <span class="cf">if</span> char <span class="op">==</span> <span class="st">"("</span> <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span> <span class="cf">for</span> char <span class="kw">in</span> inp1])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell" data-execution_count="53">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([<span class="dv">1</span> <span class="cf">if</span> char <span class="op">==</span> <span class="st">"("</span> <span class="cf">else</span> <span class="op">-</span><span class="dv">1</span> <span class="cf">for</span> char <span class="kw">in</span> in1])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="53">
 <pre><code>138</code></pre>
 </div>
 </div>
-<p>for part 2, we need to find the first time he enters the basement while following the instructions.</p>
-<div class="cell" data-execution_count="123">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>floor <span class="op">=</span> <span class="dv">0</span></span>
+<p>for part 2, we need to find the first time the we enter the basement while following the instructions.</p>
+<div class="cell" data-execution_count="44">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>floor, ans <span class="op">=</span> <span class="dv">0</span>, <span class="va">None</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>floors <span class="op">=</span> []</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, mv <span class="kw">in</span> <span class="bu">enumerate</span>(inp1):</span>
@@ -298,17 +297,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    floors.append(floor)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> floor <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        printmd(<span class="ss">f"Timesteps to reach the basement: **</span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">**"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span> <span class="co"># no need to continue climbing</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Floor Tracker"</span>)<span class="op">;</span> plt.xlabel(<span class="st">"Timestep"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Floor"</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=-</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"Basement"</span>, color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">138</span>, label<span class="op">=</span><span class="st">"Final Floor"</span>, color<span class="op">=</span><span class="st">"orange"</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(floors)), floors, label<span class="op">=</span><span class="st">"Position"</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> floor <span class="op">==</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">and</span> <span class="kw">not</span> ans:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        ans <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        printmd(<span class="ss">f"First reached the basement at timestep: **</span><span class="sc">{</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">**"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">#break # no need to continue climbing</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Floor Tracker"</span>)<span class="op">;</span> plt.xlabel(<span class="st">"Timestep"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Floor"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span>ans, label<span class="op">=</span><span class="st">"Part 2"</span>, alpha<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=-</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"Basement"</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">138</span>, label<span class="op">=</span><span class="st">"Final Floor"</span>, color<span class="op">=</span><span class="st">"orange"</span>, alpha<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(floors)), floors, label<span class="op">=</span><span class="st">"Position"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<p>Timesteps to reach the basement: <strong>1771</strong></p>
+<p>First reached the basement at timestep: <strong>1771</strong></p>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
@@ -317,41 +319,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="day-2-i-was-told-there-would-be-no-math" class="level2">
 <h2 class="anchored" data-anchor-id="day-2-i-was-told-there-would-be-no-math">Day 2: I Was Told There Would Be No Math</h2>
-<p>How much wrapping paper is needed to wrap a bunch of presents? We need<code>2*l*w + 2*w*h + 2*h*l</code> paper, and the input is the l, w and h of each present.</p>
-<p>In the bad old days of programming, this would be the perfect place to represent the data as a list or tuple in the form <code>[3 ,3, 9]</code> representing <code>[l, w, h]</code>. But now we can use namedtuples to make it easier to understand the data:</p>
-<div class="cell" data-execution_count="177">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Present <span class="op">=</span> namedtuple(<span class="st">"Present"</span>, [<span class="st">"l"</span>, <span class="st">"w"</span>, <span class="st">"h"</span>])</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>inp2 <span class="op">=</span> get_input(<span class="dv">2</span>).split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Present(<span class="op">*</span>[<span class="bu">int</span>(x) <span class="cf">for</span> x <span class="kw">in</span> i.split(<span class="st">"x"</span>)]) <span class="cf">for</span> i <span class="kw">in</span> inp2]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>data2[:<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="177">
+<p>How much wrapping paper is needed to wrap a bunch of presents? We need <code>2*l*w + 2*w*h + 2*h*l</code> paper, and the input is the l, w and h of each present.</p>
+<p>In the bad old days of programming, this would be the perfect place to represent the data as a list or tuple in the form <code>[3 ,3, 9]</code> representing <code>[l, w, h]</code>. But now we can use namedtuples to make it easier to understand the data, and also it makes it easier to add more info, e.g type of paper used, cost etc:</p>
+<div class="cell" data-execution_count="48">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Present(NamedTuple):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    l: <span class="bu">int</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    w: <span class="bu">int</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    h: <span class="bu">int</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> [Present(<span class="op">*</span>[<span class="bu">int</span>(x) <span class="cf">for</span> x <span class="kw">in</span> i.split(<span class="st">"x"</span>)]) <span class="cf">for</span> i <span class="kw">in</span> get_input(<span class="dv">2</span>).split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>data2[:<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="48">
 <pre><code>[Present(l=29, w=13, h=26),
  Present(l=11, w=11, h=14),
  Present(l=27, w=2, h=5),
  Present(l=6, w=10, h=13)]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="173">
+<p>Now to calcuate the area:</p>
+<div class="cell" data-execution_count="50">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_present_area(p: Present) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    box_area <span class="op">=</span> <span class="bu">sum</span>([<span class="dv">2</span><span class="op">*</span>p.l<span class="op">*</span>p.w, <span class="dv">2</span><span class="op">*</span>p.w<span class="op">*</span>p.h, <span class="dv">2</span><span class="op">*</span>p.h<span class="op">*</span>p.l])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    extra_paper <span class="op">=</span> math.prod(<span class="bu">sorted</span>(p)[:<span class="dv">2</span>])</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> box_area <span class="op">+</span> extra_paper</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([get_present_area(x) <span class="cf">for</span> x <span class="kw">in</span> data2])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="173">
+</details>
+<div class="cell-output cell-output-display" data-execution_count="50">
 <pre><code>1586300</code></pre>
 </div>
 </div>
 <p>Now we need to calcuate the ribbon required, which is equal to the perimeter of the smallest face + cubic volume of the present</p>
-<div class="cell" data-execution_count="175">
+<div class="cell" data-execution_count="51">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ribbon(present: Present) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""takes in present, returns length of ribbon needed to wrap"""</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    l, w, h <span class="op">=</span> <span class="bu">sorted</span>(present)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>l <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>w <span class="op">+</span> l<span class="op">*</span>w<span class="op">*</span>h</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([ribbon(present) <span class="cf">for</span> present <span class="kw">in</span> data2])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="175">
+</details>
+<div class="cell-output cell-output-display" data-execution_count="51">
 <pre><code>3737498</code></pre>
 </div>
 </div>
@@ -360,6 +374,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="day-3-perfectly-spherical-houses-in-a-vacuum">Day 3: Perfectly Spherical Houses in a Vacuum</h2>
 <p><a href="https://adventofcode.com/2015/day/3">#</a> Santa is delivering presents to houses, and his movements is 1 step at a time: north (^), south (v), east (&gt;), or west (&lt;)</p>
 <div class="cell" data-execution_count="222">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>inp3 <span class="op">=</span> get_input(<span class="dv">3</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dirs <span class="op">=</span> {<span class="st">"^"</span>: (<span class="dv">0</span>,<span class="dv">1</span>), <span class="st">"&gt;"</span>: (<span class="dv">1</span>,<span class="dv">0</span>), <span class="st">"v"</span>: (<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>), <span class="st">"&lt;"</span>: (<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>)}</span>
@@ -382,6 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Santa visited </span><span class="sc">{</span><span class="bu">len</span>(c)<span class="sc">}</span><span class="ss"> unique places in </span><span class="sc">{</span><span class="bu">len</span>(moves)<span class="sc">}</span><span class="ss"> visits"</span>)</span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>ax.plot(x,y, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">"Santa's Movements"</span>)<span class="op">;</span> ax.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <p>Santa visited <strong>2565</strong> unique places.</p>
 </div>
@@ -391,6 +408,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>for part 2, we have two santas! They move alternatingly, so we can say Santa_1 does all the odd moves and Santa_2 does all the even moves:</p>
 <div class="cell" data-execution_count="230">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>santa_1 <span class="op">=</span> get_moves(inp3[::<span class="dv">2</span>])  <span class="co"># all the odd moves</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>santa_2 <span class="op">=</span> get_moves(inp3[<span class="dv">1</span>::<span class="dv">2</span>]) <span class="co"># all the even moves</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -404,6 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>santa)</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(x,y, alpha<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="ss">f"Santa_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>ax.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <p>The two santas visited <strong>2639</strong> unique places.</p>
 </div>
@@ -416,6 +436,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="day-4-the-ideal-stocking-stuffer">Day 4: The Ideal Stocking Stuffer</h2>
 <p><a href="https://adventofcode.com/2015/day/4">#</a></p>
 <div class="cell" data-execution_count="251">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>inp4 <span class="op">=</span> <span class="st">"bgvyzdsv"</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>test4_1 <span class="op">=</span> <span class="st">"abcdef"</span> <span class="co">#609043</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>test4_2 <span class="op">=</span> <span class="st">"pqrstuv"</span> <span class="co"># 1048970</span></span>
@@ -423,11 +445,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_hash(txt):</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hashlib.md5(txt.encode(<span class="st">"utf"</span>)).hexdigest()</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="251">
 <pre><code>False</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="263">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> day_4_1(inp<span class="op">=</span>inp4, s<span class="op">=</span><span class="st">"None"</span>, target<span class="op">=</span><span class="st">"00000"</span>, i<span class="op">=</span><span class="dv">0</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="kw">not</span> s.startswith(target):</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
@@ -440,6 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> day_4_1(<span class="st">"pqrstuv"</span>) <span class="op">==</span> <span class="dv">1048970</span>    </span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>day_4_1()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <p><em>abcdef</em> target at position <strong>609,043</strong> (000001dbbfa3a5c83a2d506429c7b00e)</p>
 </div>
@@ -455,7 +481,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Part two just changes the target sring to have one more zero so thanks to making part one a function this is easy:</p>
 <div class="cell" data-execution_count="265">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>day_4_1(target<span class="op">=</span><span class="st">"000000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <p><em>bgvyzdsv</em> target at position <strong>1,038,736</strong> (000000b1b64bf5eb55aad89986126953)</p>
 </div>
@@ -473,6 +502,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>does not contain the strings ab, cd, pq, or xy, even if they are part of one of the other requirements.</li>
 </ul>
 <div class="cell" data-execution_count="270">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>vowels <span class="op">=</span> <span class="st">"aeiou"</span>                        <span class="co"># need vowels</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>bad_strings <span class="op">=</span> [<span class="st">"ab"</span>, <span class="st">"cd"</span>, <span class="st">"pq"</span>, <span class="st">"xy"</span>]  <span class="co"># don't want these</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>regex <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"([a-zA-Z])\1{1,}"</span>) <span class="co"># search for 2+ letters in a row</span></span>
@@ -488,13 +519,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vowel_count <span class="kw">and</span> two_chars <span class="kw">and</span> no_bad_str</span>
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>[is_nice_string(t) <span class="cf">for</span> t <span class="kw">in</span> test4] <span class="co">#== [False, False, True, True, True]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="270">
 <pre><code>[True, True, False, False, False]</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="274">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>inp5 <span class="op">=</span> get_input(<span class="dv">5</span>).split(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of nice strings: "</span>, <span class="bu">sum</span>([is_nice_string(t) <span class="cf">for</span> t <span class="kw">in</span> inp5]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of nice strings:  258</code></pre>
 </div>
@@ -508,11 +543,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Note: the rest remains to be done</p>
 </blockquote>
 <div class="cell" data-execution_count="278">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>regex_2char <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"([a-zA-Z])\1{1,}"</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>regex_3char <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"([a-zA-Z])\1{2,}"</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> txt <span class="kw">in</span> [<span class="st">"aa"</span>, <span class="st">"aba"</span>, <span class="st">"aaa"</span>]:</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(re.findall(regex_2char, txt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>['a']
 []
