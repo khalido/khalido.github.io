@@ -9,7 +9,7 @@
 <meta name="author" content="KO">
 <meta name="dcterms.date" content="2020-10-28">
 
-<title>A data + code blog and assorted notes - Windows 10</title>
+<title>A data + code blog and assorted notes - Windows 10/11 Setup</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Windows 10</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Windows 10/11 Setup</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                                 <div class="quarto-categories">
                 <div class="quarto-category">windows</div>
               </div>
@@ -206,8 +206,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<p>install <a href="https://scoop.sh/">scoop</a> by running this in powershell:</p>
-<pre><code>iwr -useb get.scoop.sh | iex
+<p>install <a href="https://scoop.sh/">scoop</a> to easily install programs by running this in powershell:</p>
+<pre><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+irm get.scoop.sh | iex
 scoop bucket add extras</code></pre>
 <ul>
 <li><a href="https://rufus.ie/">Rufus</a> for making bootable disks. <a href="https://www.balena.io/etcher/">etcher</a> is a decent alternative, but not as reliable.</li>
@@ -215,14 +216,15 @@ scoop bucket add extras</code></pre>
 </section>
 <section id="wsl-2" class="level2">
 <h2 class="anchored" data-anchor-id="wsl-2">wsl 2</h2>
-<p>Follow <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">the real wsl instructions</a>, my clif notes are:</p>
+<p>Follow <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">the real wsl instructions</a>, my notes are:</p>
 <p>Run powershell as admin and do:</p>
 <p>Activate wsl by <code>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</code></p>
 <p>Enable “virtual machine platform”, something which should have already been enabled by the command above.</p>
 <p><code>Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart</code></p>
 <p>Restart the pc now and set wsl2 as the default wsl: <code>wsl --set-default-version 2</code></p>
-<p>Now install the latest <a href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">linux kernel update package</a>.</p>
+<p>Install the latest <a href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">linux kernel update package</a>.</p>
 <p>Now install debian from the windows store.</p>
+<p>And presto, you have a VM running inside a linux container, and its easy to have multiple ones setup for different things.</p>
 
 
 <!-- -->
@@ -516,7 +518,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Windows 10</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Windows 10/11 Setup</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2020-10-28</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">- windows</span></span>
@@ -538,32 +540,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>install <span class="co">[</span><span class="ot">scoop</span><span class="co">](https://scoop.sh/)</span> by running this in powershell:</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>install <span class="co">[</span><span class="ot">scoop</span><span class="co">](https://scoop.sh/)</span> to easily install programs by running this in powershell:</span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">iwr -useb get.scoop.sh | iex</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">scoop bucket add extras</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Rufus</span><span class="co">](https://rufus.ie/)</span> for making bootable disks. <span class="co">[</span><span class="ot">etcher</span><span class="co">](https://www.balena.io/etcher/)</span> is a decent alternative, but not as reliable.</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## wsl 2</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Follow <span class="co">[</span><span class="ot">the real wsl instructions</span><span class="co">](https://docs.microsoft.com/en-us/windows/wsl/install-win10)</span>, my clif notes are:</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>Run powershell as admin and do:</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>Activate wsl by <span class="in">`dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>Enable "virtual machine platform", something which should have already been enabled by the command above.</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="in">`Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart`</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>Restart the pc now and set wsl2 as the default wsl: <span class="in">`wsl --set-default-version 2`</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>Now install the latest <span class="co">[</span><span class="ot">linux kernel update package</span><span class="co">](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)</span>.</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>Now install debian from the windows store.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="in">Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">irm get.scoop.sh | iex</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">scoop bucket add extras</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Rufus</span><span class="co">](https://rufus.ie/)</span> for making bootable disks. <span class="co">[</span><span class="ot">etcher</span><span class="co">](https://www.balena.io/etcher/)</span> is a decent alternative, but not as reliable.</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## wsl 2</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>Follow <span class="co">[</span><span class="ot">the real wsl instructions</span><span class="co">](https://docs.microsoft.com/en-us/windows/wsl/install-win10)</span>, my notes are:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>Run powershell as admin and do:</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>Activate wsl by <span class="in">`dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>Enable "virtual machine platform", something which should have already been enabled by the command above.</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="in">`Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart`</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>Restart the pc now and set wsl2 as the default wsl: <span class="in">`wsl --set-default-version 2`</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>Install the latest <span class="co">[</span><span class="ot">linux kernel update package</span><span class="co">](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)</span>.</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>Now install debian from the windows store.</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>And presto, you have a VM running inside a linux container, and its easy to have multiple ones setup for different things.  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
