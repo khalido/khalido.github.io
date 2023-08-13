@@ -9,7 +9,7 @@
 <meta name="author" content="KO">
 <meta name="dcterms.date" content="2023-08-08">
 
-<title>khalido.org - The max area under a histogram</title>
+<title>A data + code blog and assorted notes - The max area under a histogram</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">khalido.org</span>
+    <span class="navbar-title">A data + code blog and assorted notes</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -182,7 +182,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#a-simple-solution" id="toc-a-simple-solution" class="nav-link" data-scroll-target="#a-simple-solution">A simple solution</a>
   <ul class="collapse">
-  <li><a href="#visuals" id="toc-visuals" class="nav-link" data-scroll-target="#visuals">Visuals</a></li>
+  <li><a href="#finding-the-largest-rectangle" id="toc-finding-the-largest-rectangle" class="nav-link" data-scroll-target="#finding-the-largest-rectangle">Finding the largest rectangle</a></li>
+  <li><a href="#eyeballing-the-largest-rectangle" id="toc-eyeballing-the-largest-rectangle" class="nav-link" data-scroll-target="#eyeballing-the-largest-rectangle">Eyeballing the largest rectangle</a></li>
   </ul></li>
   <li><a href="#using-stacks" id="toc-using-stacks" class="nav-link" data-scroll-target="#using-stacks">Using stacks</a></li>
   </ul></li>
@@ -197,8 +198,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="largest-rectangle-under-a-histogram" class="level1">
 <h1>Largest Rectangle under a histogram</h1>
-<p>Problem description: https://leetcode.com/problems/largest-rectangle-in-histogram/</p>
-<div class="cell" data-execution_count="10">
+<p>This is a popular coding interview question - which is really simple with a simple histogram using pen and paper, but harder to think about in code, as it takes a bit of thinking through.</p>
+<p>Detailed problem description: https://leetcode.com/problems/largest-rectangle-in-histogram/</p>
+<p>A few test arrays with the largest area:</p>
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tests <span class="op">=</span> (</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ([<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="dv">10</span>),</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ([<span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">4</span>], <span class="dv">12</span>),</span>
@@ -227,6 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="histogram_max_area_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+<p>Looking at the array makes it easy to see where the largest rectangle might be.</p>
 <section id="a-simple-solution" class="level2">
 <h2 class="anchored" data-anchor-id="a-simple-solution">A simple solution</h2>
 <p>We can brute force this by generating the largest possible rectangle at every item in the array.</p>
@@ -237,6 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>this gives us the width, exluding the width of N itself (adding 1 to ad back N)</li>
 <li>so now we have the width, and the height is just the value N in the array</li>
 </ul>
+<p>To keep things simple, first up a helper function which returns the rectangle boundaries of a given point in an array:</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_boundary(idx: <span class="bu">int</span>, arr: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">int</span>, <span class="bu">int</span>]:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -289,6 +294,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The <code>find_boundary</code> func is working, so now its easy to get the area of the max rectangle.</p>
+<section id="finding-the-largest-rectangle" class="level3">
+<h3 class="anchored" data-anchor-id="finding-the-largest-rectangle">Finding the largest rectangle</h3>
 <p>The below function iterates through every item in the array, calculates the area of the largest rectangle at that point, and updates the max area function.</p>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_area(arr: <span class="bu">list</span>[<span class="bu">int</span>], viz: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
@@ -325,8 +332,9 @@ all 4 tests passed!</code></pre>
 </div>
 </div>
 <p>That was pretty straight forward, though a bit verbose. Now an excercise in plotting this visually:</p>
-<section id="visuals" class="level3">
-<h3 class="anchored" data-anchor-id="visuals">Visuals</h3>
+</section>
+<section id="eyeballing-the-largest-rectangle" class="level3">
+<h3 class="anchored" data-anchor-id="eyeballing-the-largest-rectangle">Eyeballing the largest rectangle</h3>
 <p>Using matplotlib to plot te max rectangle at every position of the array…</p>
 <p>Copied the plot code above and added a func to highlight the largest rectange:</p>
 <div class="cell" data-execution_count="17">
@@ -373,6 +381,7 @@ all 4 tests passed!</code></pre>
 <p><img src="histogram_max_area_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+<p>Every time I use matplotlib I’m both horrofied and inmpressed by what you can do it… basically anything but so much code…</p>
 </section>
 </section>
 <section id="using-stacks" class="level2">
