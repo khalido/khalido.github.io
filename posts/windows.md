@@ -1,5 +1,5 @@
 ---
-title: Windows 10
+title: Windows 10/11 Setup
 date: 2020-10-28
 categories:
 - windows
@@ -21,10 +21,11 @@ OR, if windows is pretty borked, restart the surface and hold the `shift` key do
 
 ## Setup
 
-install [scoop](https://scoop.sh/) by running this in powershell:
+install [scoop](https://scoop.sh/) to easily install programs by running this in powershell:
 
 ```
-iwr -useb get.scoop.sh | iex
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+irm get.scoop.sh | iex
 scoop bucket add extras
 ```
 
@@ -32,7 +33,7 @@ scoop bucket add extras
 
 ## wsl 2
 
-Follow [the real wsl instructions](https://docs.microsoft.com/en-us/windows/wsl/install-win10), my clif notes are:
+Follow [the real wsl instructions](https://docs.microsoft.com/en-us/windows/wsl/install-win10), my notes are:
 
 Run powershell as admin and do:
 
@@ -44,6 +45,8 @@ Enable "virtual machine platform", something which should have already been enab
 
 Restart the pc now and set wsl2 as the default wsl: `wsl --set-default-version 2`
 
-Now install the latest [linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi).
+Install the latest [linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi).
 
 Now install debian from the windows store.
+
+And presto, you have a VM running inside a linux container, and its easy to have multiple ones setup for different things.  
