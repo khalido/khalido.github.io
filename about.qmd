@@ -13,4 +13,6 @@ about:
 
 ---
 
-This here is possibly a blog. A minor tweak to test CI.
+## A future about
+
+Trying out [Quarto](https://quarto.org/) as a code blog.
