@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is a popular coding interview question. It’s really simple with a simple histogram using pen and paper, but harder to think about in code, as it takes a bit of thinking through.</p>
 <p>Detailed problem description: https://leetcode.com/problems/largest-rectangle-in-histogram/</p>
 <p>A few test arrays with the largest area:</p>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tests <span class="op">=</span> (</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ([<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="dv">10</span>),</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ([<span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">4</span>], <span class="dv">12</span>),</span>
@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The arrays are visualized below, which makes it much easier to think about the solution. I found it easier to do it on paper first, before coding.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, layout<span class="op">=</span><span class="st">"tight"</span>)</span>
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>so now we have the width, and the height is just the value N in the array</li>
 </ul>
 <p>To keep things simple, first up a helper function which returns the rectangle boundaries of a given point in an array:</p>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_boundary(idx: <span class="bu">int</span>, arr: <span class="bu">list</span>[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">tuple</span>[<span class="bu">int</span>, <span class="bu">int</span>]:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Example:</span></span>
@@ -275,9 +275,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> left, right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Phew! that should return the <code>(left, right)</code> boundaries for a given index and array.</p>
-<p>I drew the boundaries by hand for the first array to test the algo:</p>
-<div class="cell" data-execution_count="41">
+<p>Phew! that should return the <code>(left, right)</code> boundaries for a given index and array. Using <a href="https://numpy.org/doc/stable/reference/generated/numpy.argmax.html">np.argmax</a> should make this faster, but I wanted to see how it would look in pure python.</p>
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># testing this for the first arrary in the tests</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> arr, ans <span class="kw">in</span> tests:</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"array: "</span>, arr)</span>
@@ -294,11 +293,12 @@ Index 4: (val 2) - Boundaries: (2, 5)
 Index 5: (val 3) - Boundaries: (5, 5)</code></pre>
 </div>
 </div>
+<p>I drew the boundaries by hand for the first array to test the algo, and checked that the left and right values at each index are correct.</p>
 <p>The <code>find_boundary</code> func is working, so now its easy to get the area of the max rectangle.</p>
 <section id="finding-the-largest-rectangle" class="level3">
 <h3 class="anchored" data-anchor-id="finding-the-largest-rectangle">Finding the largest rectangle</h3>
 <p>The below function iterates through every item in the array, calculates the area of the largest rectangle at that point, and updates the max area function.</p>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="65">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> max_area(arr: <span class="bu">list</span>[<span class="bu">int</span>], viz: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""returns the area of the biggest rectangle,</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    and optionally returns its index"""</span></span>
@@ -323,14 +323,14 @@ Index 5: (val 3) - Boundaries: (5, 5)</code></pre>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> arr, ans <span class="kw">in</span> tests:</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> max_area(arr) <span class="op">==</span> ans</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>arr<span class="sc">}</span><span class="ss"> ----&gt; </span><span class="sc">{</span>max_area(arr)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"all </span><span class="sc">{</span><span class="bu">len</span>(tests)<span class="sc">}</span><span class="ss"> tests passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Input: </span><span class="sc">{</span><span class="bu">str</span>(arr)<span class="sc">:20}</span><span class="ss"> =&gt; Max Area: </span><span class="sc">{</span>ans<span class="sc">:2}</span><span class="ss"> "</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"*All </span><span class="sc">{</span><span class="bu">len</span>(tests)<span class="sc">}</span><span class="ss"> tests passed!*"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2, 1, 5, 6, 2, 3] ----&gt; 10
-[6, 3, 1, 4, 12, 4] ----&gt; 12
-[5, 6, 7, 4, 1] ----&gt; 16
-[2, 1, 3, 4, 1] ----&gt; 6
-all 4 tests passed!</code></pre>
+<pre><code>Input: [2, 1, 5, 6, 2, 3]   =&gt; Max Area: 10 
+Input: [6, 3, 1, 4, 12, 4]  =&gt; Max Area: 12 
+Input: [5, 6, 7, 4, 1]      =&gt; Max Area: 16 
+Input: [2, 1, 3, 4, 1]      =&gt; Max Area:  6 
+*All 4 tests passed!*</code></pre>
 </div>
 </div>
 <p>That was pretty straight forward, though a bit verbose. Now an excercise in plotting this visually:</p>
@@ -338,48 +338,47 @@ all 4 tests passed!</code></pre>
 <section id="eyeballing-the-largest-rectangle" class="level3">
 <h3 class="anchored" data-anchor-id="eyeballing-the-largest-rectangle">Eyeballing the largest rectangle</h3>
 <p>Using matplotlib to plot the largest rectangle - this helps explain why the answer better than a wall of text.</p>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to use to show different rectangele with diff colors and fills</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> <span class="bu">list</span>(mcolors.TABLEAU_COLORS.values())</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hatches <span class="op">=</span> [<span class="st">"/"</span>, <span class="st">"</span><span class="ch">\\</span><span class="st">"</span>, <span class="st">"|"</span>, <span class="st">"-"</span>, <span class="st">"+"</span>, <span class="st">"x"</span>, <span class="st">"o"</span>, <span class="st">"O"</span>, <span class="st">"."</span>, <span class="st">"*"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, layout<span class="op">=</span><span class="st">"tight"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (arr, ans) <span class="kw">in</span> <span class="bu">zip</span>(axes.flatten(), tests):</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    ax.set_axis_off()</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    bar <span class="op">=</span> ax.bar(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">range</span>(<span class="bu">len</span>(arr)),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        arr,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="fl">0.95</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.6</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">"yellow"</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"Largest rectange: </span><span class="sc">{</span>ans<span class="sc">:2}</span><span class="ss">"</span>, loc<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(bar, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    idx, area <span class="op">=</span> max_area(arr, <span class="va">True</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)):</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> idx:  <span class="co"># got too messy plotting all the rects</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>            left, right <span class="op">=</span> find_boundary(i, arr)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            width <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> right <span class="op">-</span> left</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            ax.add_patch(</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                Rectangle(</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                    (left <span class="op">-</span> <span class="fl">0.5</span>, <span class="dv">0</span>),</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>                    width,</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>                    arr[i],</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>                    alpha<span class="op">=</span><span class="fl">0.35</span>,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">"purple"</span>,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>                    ls<span class="op">=</span><span class="st">"--"</span>,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>                    lw<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>                    hatch<span class="op">=</span>hatches[<span class="dv">5</span>],</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to use to show different rectangele with diff colors and fills</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> <span class="bu">list</span>(mcolors.TABLEAU_COLORS.values())</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>hatches <span class="op">=</span> [<span class="st">"/"</span>, <span class="st">"</span><span class="ch">\\</span><span class="st">"</span>, <span class="st">"|"</span>, <span class="st">"-"</span>, <span class="st">"+"</span>, <span class="st">"x"</span>, <span class="st">"o"</span>, <span class="st">"O"</span>, <span class="st">"."</span>, <span class="st">"*"</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, layout<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (arr, ans) <span class="kw">in</span> <span class="bu">zip</span>(axes.flatten(), tests):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ax.set_axis_off()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    bar <span class="op">=</span> ax.bar(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">range</span>(<span class="bu">len</span>(arr)),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        arr,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="fl">0.95</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.6</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">"yellow"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"Largest rectange: </span><span class="sc">{</span>ans<span class="sc">:2}</span><span class="ss">"</span>, loc<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(bar, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    idx, area <span class="op">=</span> max_area(arr, <span class="va">True</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> idx:  <span class="co"># got too messy plotting all the rects</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            left, right <span class="op">=</span> find_boundary(i, arr)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            width <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> right <span class="op">-</span> left</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            ax.add_patch(</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                Rectangle(</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                    (left <span class="op">-</span> <span class="fl">0.5</span>, <span class="dv">0</span>),</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>                    width,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>                    arr[i],</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                    alpha<span class="op">=</span><span class="fl">0.35</span>,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>                    facecolor<span class="op">=</span><span class="st">"purple"</span>,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>                    ls<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>                    lw<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>                    hatch<span class="op">=</span>hatches[<span class="dv">5</span>],</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="histogram_max_area_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="histogram_max_area_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Every time I use matplotlib I’m both horrified and inmpressed by what you can do it… basically anything but so much code…</p>
@@ -389,38 +388,56 @@ all 4 tests passed!</code></pre>
 <h2 class="anchored" data-anchor-id="a-faster-stack-based-solution">A faster, stack based solution</h2>
 <p>By using a stack, we can find the largest rect in O(n) time, as we don’t go through the array multiple times in this solution.</p>
 <p>Instead of relooping through the array, we can use a stack to only go through the array once.</p>
-<p>This algo: * while the stack isn’t empty and the height of the current bar is &lt;= to the top bar in the stack * calc area, update if bigger * height is the bar at the top of the array * push current bar onto stack * the above will leave bars in the stack which only have bigger items to their right. Deal wit this by * pop the stack, the height is that item, the width is the distance b/t that item and the end of the array * if this area bigger, update max area</p>
-<div class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> histogram_max_area(arr):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>]  <span class="co"># the stop or sentinel value</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    max_area <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)):</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">and</span> arr[stack[<span class="op">-</span><span class="dv">1</span>]] <span class="op">&gt;=</span> arr[i]:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            current_height <span class="op">=</span> arr[stack.pop()]</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            current_width <span class="op">=</span> i <span class="op">-</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            max_area <span class="op">=</span> <span class="bu">max</span>(max_area, current_height <span class="op">*</span> current_width)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        stack.append(i)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the remaining stack items rectangles extend all the way to the end</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>:</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        current_height <span class="op">=</span> arr[stack.pop()]</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        current_width <span class="op">=</span> <span class="bu">len</span>(arr) <span class="op">-</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        max_area <span class="op">=</span> <span class="bu">max</span>(max_area, current_height <span class="op">*</span> current_width)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_area</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> arr, ans <span class="kw">in</span> tests:</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> histogram_max_area(arr) <span class="op">==</span> ans</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>arr<span class="sc">}</span><span class="ss"> ----&gt; </span><span class="sc">{</span>ans<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"all </span><span class="sc">{</span><span class="bu">len</span>(tests)<span class="sc">}</span><span class="ss"> tests passed!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This algo:</p>
+<ul>
+<li>while the stack isn’t empty and the height of the current bar is &lt;= to the top bar in the stack
+<ul>
+<li>calc rect area, update if bigger
+<ul>
+<li>rect height is the bar at the top of the array</li>
+</ul></li>
+<li>push current bar onto stack</li>
+</ul></li>
+<li>the above loops end but leaves bars in the stack which only have bigger items to their right. Deal with this by:
+<ul>
+<li>pop the stack, the height is that item, the width is the distance b/w that item and the right end of the array</li>
+<li>calc rect area, update max area</li>
+</ul></li>
+</ul>
+<div class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> histogram_max_area(arr):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    stack <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>]  <span class="co"># the stop or sentinel value</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    max_area <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">and</span> arr[stack[<span class="op">-</span><span class="dv">1</span>]] <span class="op">&gt;=</span> arr[i]:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            current_height <span class="op">=</span> arr[stack.pop()]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            current_width <span class="op">=</span> i <span class="op">-</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            max_area <span class="op">=</span> <span class="bu">max</span>(max_area, current_height <span class="op">*</span> current_width)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        stack.append(i)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the remaining stack items rectangles extend all the way to the end</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>:</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        current_height <span class="op">=</span> arr[stack.pop()]</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        current_width <span class="op">=</span> <span class="bu">len</span>(arr) <span class="op">-</span> stack[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        max_area <span class="op">=</span> <span class="bu">max</span>(max_area, current_height <span class="op">*</span> current_width)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_area</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> arr, ans <span class="kw">in</span> tests:</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> histogram_max_area(arr) <span class="op">==</span> ans</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Input: </span><span class="sc">{</span><span class="bu">str</span>(arr)<span class="sc">:20}</span><span class="ss"> =&gt; Max Area: </span><span class="sc">{</span>ans<span class="sc">:2}</span><span class="ss"> "</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"*All </span><span class="sc">{</span><span class="bu">len</span>(tests)<span class="sc">}</span><span class="ss"> tests passed!*"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2, 1, 5, 6, 2, 3] ----&gt; 10
-all 4 tests passed!</code></pre>
+<pre><code>Input: [2, 1, 5, 6, 2, 3]   =&gt; Max Area: 10 
+Input: [6, 3, 1, 4, 12, 4]  =&gt; Max Area: 12 
+Input: [5, 6, 7, 4, 1]      =&gt; Max Area: 16 
+Input: [2, 1, 3, 4, 1]      =&gt; Max Area:  6 
+*All 4 tests passed!*</code></pre>
 </div>
 </div>
+<p>Even though the stack based solution is better, faster and smaller its tougher to comprehend than the simpler one above.</p>
 
 
 </section>

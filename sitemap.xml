@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/code/advent-of-code-2015/index.html</loc>
-    <lastmod>2023-08-13T12:07:53.413Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/flood_fill.html</loc>
-    <lastmod>2023-08-13T12:07:52.541Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/windows.html</loc>
-    <lastmod>2023-08-13T12:07:51.693Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/index.html</loc>
-    <lastmod>2023-08-13T12:07:50.705Z</lastmod>
-  </url>
-  <url>
     <loc>https://github.com/khalido/khalido.github.io/about.html</loc>
-    <lastmod>2023-08-13T12:07:51.317Z</lastmod>
+    <lastmod>2023-08-17T05:39:26.592Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/sql_101/index.html</loc>
+    <lastmod>2023-08-17T05:39:25.636Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/code/advent-of-code-2015/index.html</loc>
+    <lastmod>2023-08-17T05:39:22.572Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/histogram_max_area.html</loc>
-    <lastmod>2023-08-13T12:07:52.169Z</lastmod>
+    <lastmod>2023-08-17T05:39:21.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/index.html</loc>
+    <lastmod>2023-08-17T05:39:19.816Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/flood_fill.html</loc>
+    <lastmod>2023-08-17T05:39:21.744Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/khalido/khalido.github.io/posts/code/quarto_notebook_test.html</loc>
-    <lastmod>2023-08-13T12:07:52.845Z</lastmod>
+    <lastmod>2023-08-17T05:39:23.060Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/windows.html</loc>
+    <lastmod>2023-08-17T05:39:26.188Z</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="KO">
+<meta name="dcterms.date" content="2023-08-13">
+
+<title>A data + code blog and assorted notes - SQL 101 with duckdb and jupysql</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">A data + code blog and assorted notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/khalido" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/KO" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">SQL 101 with duckdb and jupysql</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">sql</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>KO </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 13, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sql-101-with-duckdb-and-jupysql" id="toc-sql-101-with-duckdb-and-jupysql" class="nav-link active" data-scroll-target="#sql-101-with-duckdb-and-jupysql">SQL 101 with duckdb and jupysql</a>
+  <ul class="collapse">
+  <li><a href="#jupyter-duckdb-setup-for-sql" id="toc-jupyter-duckdb-setup-for-sql" class="nav-link" data-scroll-target="#jupyter-duckdb-setup-for-sql">Jupyter + duckdb setup for sql</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-duckdb-for-jupyter" id="toc-setting-up-duckdb-for-jupyter" class="nav-link" data-scroll-target="#setting-up-duckdb-for-jupyter">Setting up duckdb for jupyter</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#eda-and-data-cleanup" id="toc-eda-and-data-cleanup" class="nav-link" data-scroll-target="#eda-and-data-cleanup">EDA and data cleanup</a>
+  <ul class="collapse">
+  <li><a href="#metadata-about-the-table" id="toc-metadata-about-the-table" class="nav-link" data-scroll-target="#metadata-about-the-table">Metadata about the table</a></li>
+  <li><a href="#data-cleanup" id="toc-data-cleanup" class="nav-link" data-scroll-target="#data-cleanup">Data cleanup</a></li>
+  </ul></li>
+  <li><a href="#calculations-in-sql" id="toc-calculations-in-sql" class="nav-link" data-scroll-target="#calculations-in-sql">Calculations in SQL</a>
+  <ul class="collapse">
+  <li><a href="#big-mac-price-in-usd" id="toc-big-mac-price-in-usd" class="nav-link" data-scroll-target="#big-mac-price-in-usd">Big mac price in USD</a></li>
+  <li><a href="#calculating-the-big-mac-index" id="toc-calculating-the-big-mac-index" class="nav-link" data-scroll-target="#calculating-the-big-mac-index">Calculating the big mac index</a></li>
+  <li><a href="#adjusted-gdp-based-on-big-mac-index" id="toc-adjusted-gdp-based-on-big-mac-index" class="nav-link" data-scroll-target="#adjusted-gdp-based-on-big-mac-index">Adjusted GDP based on big mac index</a></li>
+  <li><a href="#todo-adjusted-big-mac-index" id="toc-todo-adjusted-big-mac-index" class="nav-link" data-scroll-target="#todo-adjusted-big-mac-index">TODO: Adjusted big mac index</a></li>
+  </ul></li>
+  <li><a href="#adding-country-data" id="toc-adding-country-data" class="nav-link" data-scroll-target="#adding-country-data">Adding country data</a>
+  <ul class="collapse">
+  <li><a href="#joining-the-two-tables" id="toc-joining-the-two-tables" class="nav-link" data-scroll-target="#joining-the-two-tables">Joining the two tables</a></li>
+  </ul></li>
+  <li><a href="#big-mac-index-chart-using-matplotlib" id="toc-big-mac-index-chart-using-matplotlib" class="nav-link" data-scroll-target="#big-mac-index-chart-using-matplotlib">Big Mac Index chart using Matplotlib</a></li>
+  <li><a href="#big-mac-index-using-plotly" id="toc-big-mac-index-using-plotly" class="nav-link" data-scroll-target="#big-mac-index-using-plotly">Big Mac Index using Plotly</a></li>
+  <li><a href="#the-end" id="toc-the-end" class="nav-link" data-scroll-target="#the-end">the end</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="sql-101-with-duckdb-and-jupysql" class="level1">
+<h1>SQL 101 with duckdb and jupysql</h1>
+<section id="jupyter-duckdb-setup-for-sql" class="level2">
+<h2 class="anchored" data-anchor-id="jupyter-duckdb-setup-for-sql">Jupyter + duckdb setup for sql</h2>
+<p>Before the sql even starts, I want to use jupyter notebooks + sql. I’m using duckdb inside jupyter to look at a few sql datasets.</p>
+<p>First up, make a new env and install the necessary libraries if necessary by:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> sql101 python=3.11 jupyterlab duckdb duckdb-engine jupysql matplotlib openpyxl plotly</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> active sql101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="setting-up-duckdb-for-jupyter" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-duckdb-for-jupyter">Setting up duckdb for jupyter</h3>
+<p>Once all the packages have been installed, setup jupyter to use duckdb. You don’t need to use all the three config options below, just noting some useful ones for future reference.</p>
+<p>the <code>%config SqlMagic.autopandas</code> in particular is useful - the sql query is returned as a pandas dataframe. This is useful as even though right now I have a small dataset, on a real project duckdb can talk to <a href="https://clickhouse.com/">remote databases</a>, or query <a href="https://duckdb.org/2021/06/25/querying-parquet.html">parquet files on the web</a>, do a query and only pull down the subset of data selected in the query.</p>
+<p>After that, the pandas dataframe is ideal for plotting and other pythonic stuff.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import jupysql Jupyter extension to create SQL cells</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext sql</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>config SqlMagic.displaycon <span class="op">=</span> <span class="va">False</span>  <span class="co"># hides con info</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>config SqlMagic.autopandas <span class="op">=</span> <span class="va">True</span>   <span class="co"># output as df</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#%config SqlMagic.feedback = False   # </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql duckdb:<span class="op">//</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>I’m using the <a href="https://github.com/TheEconomist/big-mac-data">Economist’s big mac gdp source data</a>. Pandas can directly download the csv file into a dataframe which duckdb can read, but trying to stick with most sql here, so I’m downloading the csv file to disk and reading it with duckdb directly.</p>
+<p>Why the big mac index? To calculate the big mac index we need to use <a href="https://duckdb.org/2023/05/26/correlated-subqueries-in-sql.html">correlated subqueries</a>, which is a pretty advanced topic!</p>
+<p>The final output figure <a href="#fig-big-mac-index">Figure&nbsp;1</a> is somewhere below, this notebook works through getting there slowly:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://github.com/TheEconomist/big-mac-data/raw/master/source-data/big-mac-source-data-v2.csv"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> <span class="st">"big-mac-source-data-v2.csv"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(fname, <span class="st">"wb"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">file</span>.write(requests.get(url).content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When using <code>%%sql</code> cells in jupyter, put python variables in brackets like so: <code>{{var_name}}</code>.</p>
+<p>The <a href="https://duckdb.org/docs/guides/import/csv_import">read_csv_auto</a> should auto-magically read and convert the csv to a sql table:</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;sql&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">--</span> make a table bigmac <span class="im">from</span> the csv <span class="bu">file</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>create table <span class="cf">if</span> <span class="kw">not</span> exists bigmac <span class="im">as</span> select <span class="op">*</span> <span class="im">from</span> read_csv_auto(<span class="st">'</span><span class="sc">{{</span><span class="st">fname</span><span class="sc">}}</span><span class="st">'</span>)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>select <span class="op">*</span> <span class="im">from</span> bigmac limit <span class="dv">3</span><span class="op">;</span> <span class="op">--</span> comments can go here too<span class="op">!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Argentina</td>
+<td>ARG</td>
+<td>ARS</td>
+<td>2.50</td>
+<td>1.00</td>
+<td>8709.072</td>
+<td>8709.072</td>
+<td>2000-04-01</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Australia</td>
+<td>AUS</td>
+<td>AUD</td>
+<td>2.59</td>
+<td>1.68</td>
+<td>21746.809</td>
+<td>33698.764</td>
+<td>2000-04-01</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Brazil</td>
+<td>BRA</td>
+<td>BRL</td>
+<td>2.95</td>
+<td>1.79</td>
+<td>3501.438</td>
+<td>6351.375</td>
+<td>2000-04-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>So now we have a table inside a sql database.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>sql convention is to use a lot of CAPITALS, but for fast typing and a lack of an sql formatter, I’m going lowercase. Ideally your <a href="https://dbgate.org/">sql</a> writing <a href="https://azure.microsoft.com/en-au/products/data-studio">thingamjig</a> should have a formatter which does that for you.</p>
+</div>
+</div>
+</section>
+<section id="eda-and-data-cleanup" class="level2">
+<h2 class="anchored" data-anchor-id="eda-and-data-cleanup">EDA and data cleanup</h2>
+<p>Data always has some issues, so taking a look:</p>
+<section id="metadata-about-the-table" class="level3">
+<h3 class="anchored" data-anchor-id="metadata-about-the-table">Metadata about the table</h3>
+<p>A sql database can have many tables, so its useful to take a look at whats there:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sqlcmd tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bigmac</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This should describe the table:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql describe bigmac<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Success</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The <code>describe bigmac</code> code should spit out table info, seems to be some kind of bug, but moving on, we can get the gist using the <a href="https://duckdb.org/docs/sql/information_schema">information schema</a>:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SELECT COLUMN_NAME, DATA_TYPE</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>FROM INFORMATION_SCHEMA.COLUMNS</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>WHERE TABLE_NAME <span class="op">=</span> <span class="st">'bigmac'</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">column_name</th>
+<th data-quarto-table-cell-role="th">data_type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>name</td>
+<td>VARCHAR</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>iso_a3</td>
+<td>VARCHAR</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>currency_code</td>
+<td>VARCHAR</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>local_price</td>
+<td>DOUBLE</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>dollar_ex</td>
+<td>DOUBLE</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>GDP_dollar</td>
+<td>DOUBLE</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>GDP_local</td>
+<td>DOUBLE</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>date</td>
+<td>DATE</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The above is not that useful, a more informative look which counts the values is:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sqlcmd profile <span class="op">--</span>table <span class="st">'bigmac'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div style="position: sticky; left: 0; padding: 10px; font-size: 12px; color: #FFA500"><strong></strong> </div><style>
+ #profile-table td:first-child {
+  position: sticky;
+  left: 0;
+  background-color: var(--jp-cell-editor-background);
+  font-weight: bold;
+}
+ #profile-table thead tr th:first-child {
+  position: sticky;
+  left: 0;
+  background-color: var(--jp-cell-editor-background);
+  font-weight: bold; /* Adding bold text */
+}
+            </style><style></style>
+<table id="profile-table-7ed664dce5644e0d8abff0f8a7b96f42" data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>count</td>
+<td>1946</td>
+<td>1946</td>
+<td>1946</td>
+<td>1946</td>
+<td>1946</td>
+<td>1943</td>
+<td>1918</td>
+<td>1946</td>
+</tr>
+<tr class="even">
+<td>unique</td>
+<td>74</td>
+<td>73</td>
+<td>58</td>
+<td>669</td>
+<td>1497</td>
+<td>1157</td>
+<td>1141</td>
+<td>37</td>
+</tr>
+<tr class="odd">
+<td>top</td>
+<td>Argentina</td>
+<td>ARG</td>
+<td>EUR</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>2021-07-01</td>
+</tr>
+<tr class="even">
+<td>freq</td>
+<td>37</td>
+<td>37</td>
+<td>351</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>73</td>
+</tr>
+<tr class="odd">
+<td>mean</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>15816.0895</td>
+<td>4722.5632</td>
+<td>24790.7531</td>
+<td>2615423.9573</td>
+<td>nan</td>
+</tr>
+<tr class="even">
+<td>std</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>393903.7657</td>
+<td>100597.3791</td>
+<td>21425.9054</td>
+<td>9471890.5225</td>
+<td>nan</td>
+</tr>
+<tr class="odd">
+<td>min</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>689.826</td>
+<td>3004.341</td>
+<td>nan</td>
+</tr>
+<tr class="even">
+<td>25%</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>4.4500</td>
+<td>1.0035</td>
+<td>6577.2870</td>
+<td>33698.7640</td>
+<td>nan</td>
+</tr>
+<tr class="odd">
+<td>50%</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>15.0000</td>
+<td>5.4650</td>
+<td>17815.1920</td>
+<td>70506.5530</td>
+<td>nan</td>
+</tr>
+<tr class="even">
+<td>75%</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>87.0000</td>
+<td>32.8750</td>
+<td>41409.6309</td>
+<td>358689.5130</td>
+<td>nan</td>
+</tr>
+<tr class="odd">
+<td>max</td>
+<td>nan</td>
+<td>nan</td>
+<td>nan</td>
+<td>16020000.0</td>
+<td>3613989.071</td>
+<td>102576.68</td>
+<td>85420189.717</td>
+<td>nan</td>
+</tr>
+</tbody>
+</table>
+<div style="position: sticky; left: 0; padding: 10px; font-size: 12px; color: black; background-color: white;"><strong></strong> </div>
+</div>
+</div>
+</section>
+<section id="data-cleanup" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleanup">Data cleanup</h3>
+<p>So we have 3 rows without a GDP_dollar, and at least one <code>local_price</code> and <code>dollar_ex</code> of 0, so dropping those rows. We also need <code>GDP_local</code> to be able to adjust the bigmac index, so dropping any nulls in that row too.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>delete <span class="im">from</span> bigmac where </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>GDP_dollar <span class="kw">is</span> null <span class="kw">or</span> GDP_local <span class="kw">is</span> null <span class="kw">or</span> local_price<span class="op">&lt;=</span><span class="dv">0</span> <span class="kw">or</span> dollar_ex<span class="op">&lt;=</span><span class="dv">0</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Success</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> <span class="op">%</span>sql select count(<span class="op">*</span>) <span class="im">as</span> N <span class="im">from</span> bigmac<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ss">f"The data set has a total of </span><span class="sc">{</span>rows<span class="sc">.</span>N<span class="sc">.</span>loc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> rows."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>'The data set has a total of 1918 rows.'</code></pre>
+</div>
+</div>
+<p>It’s a pretty clean and tidy dataset, we did loose a few rows, which in a real world case might bear more investigation, but moving on…</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql select count(distinct name) <span class="im">as</span> Countries, <span class="bu">min</span>(date), <span class="bu">max</span>(date) <span class="im">from</span> bigmac<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Countries</th>
+<th data-quarto-table-cell-role="th">min(date)</th>
+<th data-quarto-table-cell-role="th">max(date)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>73</td>
+<td>2000-04-01</td>
+<td>2022-07-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We have data for 73 countries from April 2000 to July 2022.</p>
+</section>
+</section>
+<section id="calculations-in-sql" class="level2">
+<h2 class="anchored" data-anchor-id="calculations-in-sql">Calculations in SQL</h2>
+<p>Adding some columns by calculating new ones in sql. This is where the <a href="https://duckdb.org/docs/sql/introduction">sql</a> starts.</p>
+<section id="big-mac-price-in-usd" class="level3">
+<h3 class="anchored" data-anchor-id="big-mac-price-in-usd">Big mac price in USD</h3>
+<p>We want to get the US dollar price for a big mac in every country, which is easy as our data contains the local_price and dollar exchange rate. So we add a new column: <code>dollar_price = local_price / dollar_ex</code>.</p>
+<p>In sql you can’t just add a column, you first have to add it with a value type. In pandas you can do this in one step: <code>df["dollar_price"] = df.local_price / df.dollar_ex</code>.</p>
+<p>So here we add a new col <code>dollar_price</code> and calc its value:</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>alter table bigmac </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    add column <span class="cf">if</span> <span class="kw">not</span> exists dollar_price DOUBLE<span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>update bigmac </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> dollar_price <span class="op">=</span> local_price <span class="op">/</span> dollar_ex<span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>select <span class="op">*</span> <span class="im">from</span> bigmac limit <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">dollar_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Argentina</td>
+<td>ARG</td>
+<td>ARS</td>
+<td>2.50</td>
+<td>1.00</td>
+<td>8709.072</td>
+<td>8709.072</td>
+<td>2000-04-01</td>
+<td>2.500000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Australia</td>
+<td>AUS</td>
+<td>AUD</td>
+<td>2.59</td>
+<td>1.68</td>
+<td>21746.809</td>
+<td>33698.764</td>
+<td>2000-04-01</td>
+<td>1.541667</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Brazil</td>
+<td>BRA</td>
+<td>BRL</td>
+<td>2.95</td>
+<td>1.79</td>
+<td>3501.438</td>
+<td>6351.375</td>
+<td>2000-04-01</td>
+<td>1.648045</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The line <code>if not exists</code> is optional, but useful in this context as it prevents errors if I rerun the notebook.</p>
+</section>
+<section id="calculating-the-big-mac-index" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-the-big-mac-index">Calculating the big mac index</h3>
+<p>Now we want to account for purchasing power parity by divinding the dollar price with the base currencies price. The Economist uses five base currencies: <code>('USD', 'EUR', 'GBP', 'JPY', 'CNY')</code></p>
+<p>For simplicity’s sake, I’ll stick with just USD. This is a easy calc to do in python, in SQL its a bit messy…, so I am using <a href="https://duckdb.org/2023/05/26/correlated-subqueries-in-sql.html">Correlated Subqueries in SQL</a> to do this.</p>
+<p>The dollar_price on each row is divided by the dollar_price in USD. Since we have multiple dates, the query below matches on both the date and the country code.</p>
+<p>The inner query returns the US dollar_price for each date, so every row in the table gets divided by the right dates USD price.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This only works because for each unique date, there is only one row for USA.</p>
+</div>
+</div>
+<p>Finally, we minus the number by <code>-1</code>, as we divide the US price by its own, so its always at 1. By subtracting <code>-1</code>, we set that to zero, which makes it wasy to see how the other countries are over or under that.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ALTER TABLE bigmac ADD COLUMN IF NOT EXISTS USD DOUBLE<span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>update bigmac <span class="im">as</span> b1</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> USD <span class="op">=</span> dollar_price <span class="op">/</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            (select b2.dollar_price <span class="im">from</span> bigmac <span class="im">as</span> b2</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            where b2.date <span class="op">=</span> b1.date</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> b2.iso_a3 <span class="op">=</span> <span class="st">'USA'</span>) <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>select <span class="op">*</span> <span class="im">from</span> bigmac order by date desc, name desc limit <span class="dv">6</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">dollar_price</th>
+<th data-quarto-table-cell-role="th">USD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Vietnam</td>
+<td>VNM</td>
+<td>VND</td>
+<td>69000.00</td>
+<td>23417.00000</td>
+<td>3724.543</td>
+<td>8.542019e+07</td>
+<td>2022-07-01</td>
+<td>2.946577</td>
+<td>-0.427849</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Uruguay</td>
+<td>URY</td>
+<td>UYU</td>
+<td>255.00</td>
+<td>41.91000</td>
+<td>16756.344</td>
+<td>7.291942e+05</td>
+<td>2022-07-01</td>
+<td>6.084467</td>
+<td>0.181450</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>United States</td>
+<td>USA</td>
+<td>USD</td>
+<td>5.15</td>
+<td>1.00000</td>
+<td>69231.400</td>
+<td>6.923140e+04</td>
+<td>2022-07-01</td>
+<td>5.150000</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>United Arab Emirates</td>
+<td>ARE</td>
+<td>AED</td>
+<td>18.00</td>
+<td>3.67305</td>
+<td>42883.686</td>
+<td>1.574903e+05</td>
+<td>2022-07-01</td>
+<td>4.900559</td>
+<td>-0.048435</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Turkey</td>
+<td>TUR</td>
+<td>TRY</td>
+<td>47.00</td>
+<td>17.56500</td>
+<td>9527.683</td>
+<td>8.448134e+04</td>
+<td>2022-07-01</td>
+<td>2.675776</td>
+<td>-0.480432</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Thailand</td>
+<td>THA</td>
+<td>THB</td>
+<td>128.00</td>
+<td>36.61250</td>
+<td>7336.086</td>
+<td>2.313028e+05</td>
+<td>2022-07-01</td>
+<td>3.496074</td>
+<td>-0.321151</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>I did a few random checks and looks like the formula did use the right USD price to calculate the USD offset.</p>
+</section>
+<section id="adjusted-gdp-based-on-big-mac-index" class="level3">
+<h3 class="anchored" data-anchor-id="adjusted-gdp-based-on-big-mac-index">Adjusted GDP based on big mac index</h3>
+<p>Big Mac adjusted per capita GDP is the GDP in local currency divided by the exchange rate as determined by big macs (price in local currency divivded by price in US).</p>
+<p>The formula is: <code>GDP_Local / (local_price / dollar_price)</code></p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ALTER TABLE bigmac ADD COLUMN IF NOT EXISTS GDP_bigmac DOUBLE<span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>update bigmac <span class="im">as</span> b1</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">set</span> GDP_bigmac <span class="op">=</span> GDP_local <span class="op">/</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>            (local_price <span class="op">/</span> (select b2.dollar_price <span class="im">from</span> bigmac <span class="im">as</span> b2</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            where b2.date <span class="op">=</span> b1.date</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> b2.iso_a3 <span class="op">=</span> <span class="st">'USA'</span>))<span class="op">;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>select <span class="op">*</span> <span class="im">from</span> bigmac order by date desc, name desc limit <span class="dv">6</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">dollar_price</th>
+<th data-quarto-table-cell-role="th">USD</th>
+<th data-quarto-table-cell-role="th">GDP_bigmac</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Vietnam</td>
+<td>VNM</td>
+<td>VND</td>
+<td>69000.00</td>
+<td>23417.00000</td>
+<td>3724.543</td>
+<td>8.542019e+07</td>
+<td>2022-07-01</td>
+<td>2.946577</td>
+<td>-0.427849</td>
+<td>6375.564885</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Uruguay</td>
+<td>URY</td>
+<td>UYU</td>
+<td>255.00</td>
+<td>41.91000</td>
+<td>16756.344</td>
+<td>7.291942e+05</td>
+<td>2022-07-01</td>
+<td>6.084467</td>
+<td>0.181450</td>
+<td>14726.863618</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>United States</td>
+<td>USA</td>
+<td>USD</td>
+<td>5.15</td>
+<td>1.00000</td>
+<td>69231.400</td>
+<td>6.923140e+04</td>
+<td>2022-07-01</td>
+<td>5.150000</td>
+<td>0.000000</td>
+<td>69231.400000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>United Arab Emirates</td>
+<td>ARE</td>
+<td>AED</td>
+<td>18.00</td>
+<td>3.67305</td>
+<td>42883.686</td>
+<td>1.574903e+05</td>
+<td>2022-07-01</td>
+<td>4.900559</td>
+<td>-0.048435</td>
+<td>45059.735594</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Turkey</td>
+<td>TUR</td>
+<td>TRY</td>
+<td>47.00</td>
+<td>17.56500</td>
+<td>9527.683</td>
+<td>8.448134e+04</td>
+<td>2022-07-01</td>
+<td>2.675776</td>
+<td>-0.480432</td>
+<td>9256.997784</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Thailand</td>
+<td>THA</td>
+<td>THB</td>
+<td>128.00</td>
+<td>36.61250</td>
+<td>7336.086</td>
+<td>2.313028e+05</td>
+<td>2022-07-01</td>
+<td>3.496074</td>
+<td>-0.321151</td>
+<td>9306.323554</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>And presto, we have a gdp per big mac, which for most countries is significantly different from each other. A couple of plots to eyeball this:</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>country <span class="op">=</span> <span class="st">"Pakistan"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="op">%</span>sql select <span class="op">*</span> <span class="im">from</span> bigmac where name <span class="kw">in</span> (<span class="st">'</span><span class="sc">{{</span><span class="st">country</span><span class="sc">}}</span><span class="st">'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(df, x<span class="op">=</span><span class="st">"date"</span>, y<span class="op">=</span>[<span class="st">"GDP_dollar"</span>, <span class="st">"GDP_bigmac"</span>], </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>              title<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">: GDP local vs bigmac"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>              markers<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="op">%</span>sql select <span class="op">*</span> <span class="im">from</span> bigmac<span class="op">;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax.spines[[<span class="st">"top"</span>, <span class="st">"right"</span>]].set_visible(<span class="va">False</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"GDP Bigmac vs dollar"</span>, loc<span class="op">=</span><span class="st">"left"</span>, weight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name <span class="kw">in</span> [<span class="st">"Pakistan"</span>, <span class="st">"India"</span>]:</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> df.query(<span class="st">"name == @name"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    ax.plot(d.date, d.GDP_bigmac, alpha<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    ax.fill_between(d.date, d.GDP_bigmac, d.GDP_dollar, alpha<span class="op">=</span><span class="fl">0.12</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#ax.plot(d.date, d.GDP_dollar, alpha=0.6, ls="--")</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This is interesting, you can see the indian dollar even though its close to the Pakistan one in GDP_dollar terms, the big mac index GDP says it buys a lot more.</p>
+</section>
+<section id="todo-adjusted-big-mac-index" class="level3">
+<h3 class="anchored" data-anchor-id="todo-adjusted-big-mac-index">TODO: Adjusted big mac index</h3>
+<p>This uses the big mac adjusted per capita GDP price calculated above to get a adjusted dollar price for a bigmac. This looks very similar to first big mac index so left this calc for a future date.</p>
+<p>See <a href="https://github.com/theeconomist/big-mac-data/blob/master/Big%20Mac%20data%20generator.ipynb">Calculating the adjusted index</a> for details.</p>
+</section>
+</section>
+<section id="adding-country-data" class="level2">
+<h2 class="anchored" data-anchor-id="adding-country-data">Adding country data</h2>
+<p>There are a lot of countries in the index, which will make the graph a bit messy, so to add some groups to the counties (and do more sql!) I’m going to use the world banks <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups">income dataset</a>, primary to add regions and income groups.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_income <span class="op">=</span> pd.read_excel(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://datacatalogfiles.worldbank.org/ddh-published/0037712/DR0090755/CLASS.xlsx"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df_income <span class="op">=</span> (</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    df_income.dropna(subset<span class="op">=</span>[<span class="st">"Income group"</span>, <span class="st">"Economy"</span>])</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    .drop(columns<span class="op">=</span><span class="st">"Lending category"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">"Code"</span>: <span class="st">"iso_a3"</span>, <span class="st">"Income group"</span>: <span class="st">"income_group"</span>})</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># adding in the missing eurozone</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>euro_row <span class="op">=</span> [<span class="st">"Eurozone"</span>, <span class="st">"EUZ"</span>, <span class="st">"Europe"</span>, <span class="st">"High income"</span>]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>df_income.loc[<span class="bu">len</span>(df_income)] <span class="op">=</span> euro_row</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>df_income.tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Economy</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">income_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">215</td>
+<td>South Africa</td>
+<td>ZAF</td>
+<td>Sub-Saharan Africa</td>
+<td>Upper middle income</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">216</td>
+<td>Zambia</td>
+<td>ZMB</td>
+<td>Sub-Saharan Africa</td>
+<td>Lower middle income</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">217</td>
+<td>Eurozone</td>
+<td>EUZ</td>
+<td>Europe</td>
+<td>High income</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>No need to do this step, but for more sql goodness, lets add this as a table in our database so we can practice joining two tables:</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>sql</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>create table income <span class="im">as</span> select <span class="op">*</span> <span class="im">from</span> df_income<span class="op">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>select <span class="op">*</span> <span class="im">from</span> income limit <span class="dv">3</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Economy</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">income_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Aruba</td>
+<td>ABW</td>
+<td>Latin America &amp; Caribbean</td>
+<td>High income</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Afghanistan</td>
+<td>AFG</td>
+<td>South Asia</td>
+<td>Low income</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Angola</td>
+<td>AGO</td>
+<td>Sub-Saharan Africa</td>
+<td>Lower middle income</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="joining-the-two-tables" class="level3">
+<h3 class="anchored" data-anchor-id="joining-the-two-tables">Joining the two tables</h3>
+<p>Here we join these two tables into a dataframe for plotting.</p>
+<p>I am using a left join as I want to keep all data in the bigmac table, and just add country info.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t write sql like below, use capitals and linebreaks!</p>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_all <span class="op">=</span> <span class="op">%</span>sql select <span class="op">*</span> <span class="im">from</span> bigmac left join income on bigmac.iso_a3 <span class="op">=</span> income.iso_a3 order by bigmac.date asc<span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_all.head(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">dollar_price</th>
+<th data-quarto-table-cell-role="th">USD</th>
+<th data-quarto-table-cell-role="th">GDP_bigmac</th>
+<th data-quarto-table-cell-role="th">Economy</th>
+<th data-quarto-table-cell-role="th">iso_a3_2</th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">income_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Argentina</td>
+<td>ARG</td>
+<td>ARS</td>
+<td>2.50</td>
+<td>1.00</td>
+<td>8709.072</td>
+<td>8709.072</td>
+<td>2000-04-01</td>
+<td>2.500000</td>
+<td>0.116071</td>
+<td>7803.328512</td>
+<td>Argentina</td>
+<td>ARG</td>
+<td>Latin America &amp; Caribbean</td>
+<td>Upper middle income</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Australia</td>
+<td>AUS</td>
+<td>AUD</td>
+<td>2.59</td>
+<td>1.68</td>
+<td>21746.809</td>
+<td>33698.764</td>
+<td>2000-04-01</td>
+<td>1.541667</td>
+<td>-0.311756</td>
+<td>29144.876973</td>
+<td>Australia</td>
+<td>AUS</td>
+<td>East Asia &amp; Pacific</td>
+<td>High income</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Everything looks good here, we now have a dataframe which combines the two tables and is ready to plot.</p>
+</section>
+</section>
+<section id="big-mac-index-chart-using-matplotlib" class="level2">
+<h2 class="anchored" data-anchor-id="big-mac-index-chart-using-matplotlib">Big Mac Index chart using Matplotlib</h2>
+<p>This is going to be ugly, but its good matplotlib practice. First up, for the economist plot we just want the latest date:</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_all.query(<span class="st">"date == date.max()"</span>).sort_values(<span class="st">"USD"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">iso_a3</th>
+<th data-quarto-table-cell-role="th">currency_code</th>
+<th data-quarto-table-cell-role="th">local_price</th>
+<th data-quarto-table-cell-role="th">dollar_ex</th>
+<th data-quarto-table-cell-role="th">GDP_dollar</th>
+<th data-quarto-table-cell-role="th">GDP_local</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">dollar_price</th>
+<th data-quarto-table-cell-role="th">USD</th>
+<th data-quarto-table-cell-role="th">GDP_bigmac</th>
+<th data-quarto-table-cell-role="th">Economy</th>
+<th data-quarto-table-cell-role="th">iso_a3_2</th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">income_group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1899</td>
+<td>Romania</td>
+<td>ROU</td>
+<td>RON</td>
+<td>11.0</td>
+<td>4.82175</td>
+<td>14667.089</td>
+<td>6.102120e+04</td>
+<td>2022-07-01</td>
+<td>2.281329</td>
+<td>-0.557023</td>
+<td>28569.017768</td>
+<td>Romania</td>
+<td>ROU</td>
+<td>Europe &amp; Central Asia</td>
+<td>High income</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1876</td>
+<td>Indonesia</td>
+<td>IDN</td>
+<td>IDR</td>
+<td>35000.0</td>
+<td>14977.50000</td>
+<td>4356.560</td>
+<td>6.233566e+07</td>
+<td>2022-07-01</td>
+<td>2.336839</td>
+<td>-0.546245</td>
+<td>9172.246719</td>
+<td>Indonesia</td>
+<td>IDN</td>
+<td>East Asia &amp; Pacific</td>
+<td>Upper middle income</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="fig-big-mac-index" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">10</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ax.spines[[<span class="st">"top"</span>, <span class="st">"right"</span>, <span class="st">"left"</span>]].set_visible(<span class="va">False</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Big Mac Index"</span>, loc<span class="op">=</span><span class="st">"left"</span>, weight<span class="op">=</span><span class="st">"bold"</span>, ha<span class="op">=</span><span class="st">"left"</span>, fontsize<span class="op">=</span><span class="dv">15</span>, x<span class="op">=-</span><span class="fl">0.42</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=-</span><span class="fl">0.2</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="fl">0.915</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="st">"Unadjusted index for 2022"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting the actual data</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="co"># assigning each income group a color</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>color_list <span class="op">=</span> <span class="bu">list</span>(mcolors.TABLEAU_COLORS.values())</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> {country: color_list[i] <span class="cf">for</span> i, country <span class="kw">in</span> <span class="bu">enumerate</span>(df.income_group.unique())}</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="co"># the actual plot</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>ax.barh(</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>df.name,</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>df.USD,</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.85</span>,</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="fl">0.78</span>,</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>[colors[income] <span class="cf">for</span> income <span class="kw">in</span> df.income_group],</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="co"># x axis things</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>ax.xaxis.tick_top()</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"                 &lt;-- Undervalued              Overvalued --&gt; "</span>,</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    labelpad<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">11</span>,</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_label_position(<span class="st">"top"</span>)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a><span class="co"># fix and label the y axis</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.set_yticklabels(df.name, ha="left")</span></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_tick_params(pad<span class="op">=</span><span class="dv">2</span>, labelsize<span class="op">=</span><span class="dv">9</span>, bottom<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">1</span>, df.shape[<span class="dv">0</span>])</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="co"># legend for income groups</span></span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>handles <span class="op">=</span> [mpatches.Patch(color<span class="op">=</span>colors[i]) <span class="cf">for</span> i <span class="kw">in</span> colors]</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> colors]</span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>ax.legend(handles, labels, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>ax.grid(which<span class="op">=</span><span class="st">"major"</span>, axis<span class="op">=</span><span class="st">"x"</span>, color<span class="op">=</span><span class="st">"#758D99"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Set source text</span></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=-</span><span class="fl">0.2</span>,</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="fl">0.08</span>,</span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="st">"""Source: "Big Mac Index" via economist.com"""</span>,</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-big-mac-index-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<pre><code>Text(-0.2, 0.08, 'Source: "Big Mac Index" via economist.com')</code></pre>
+<figcaption class="figure-caption">(a) Big Mac Index</figcaption>
+</figure>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-big-mac-index-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-big-mac-index-output-2.png" class="img-fluid figure-img" data-ref-parent="fig-big-mac-index"></p>
+<figcaption class="figure-caption">(b)</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+<p>phew! That is a long image, with too many countries, and its a bit ugly, so if this was going to be used somewhere, I’d filter the countries and produce a more sensible sized graph.</p>
+</section>
+<section id="big-mac-index-using-plotly" class="level2">
+<h2 class="anchored" data-anchor-id="big-mac-index-using-plotly">Big Mac Index using Plotly</h2>
+<p>I should have probably gone with <a href="https://plotly.com/graphing-libraries/">plotly</a> first for this, but here goes:</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    df, x<span class="op">=</span><span class="st">"USD"</span>, y<span class="op">=</span><span class="st">"name"</span>, width<span class="op">=</span><span class="dv">600</span>, height<span class="op">=</span><span class="dv">800</span>, text<span class="op">=</span><span class="st">"name"</span>, color<span class="op">=</span><span class="st">"income_group"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title_text<span class="op">=</span><span class="st">"Big Mac Index"</span>, yaxis_categoryorder<span class="op">=</span><span class="st">"total ascending"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+<section id="the-end" class="level2">
+<h2 class="anchored" data-anchor-id="the-end">the end</h2>
+<p>Can play around a bit more with this data… but heaps enough for now.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
