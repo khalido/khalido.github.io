@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/algorithims/histogram_max_area.html",
       "/posts/sql_101/index.html",
+      "/posts/algorithims/histogram_max_area.html",
       "/posts/code/quarto_notebook_test.html",
       "/posts/windows.html",
       "/posts/code/advent-of-code-2015/index.html",
