@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/code/advent-of-code-2015/index.html</loc>
-    <lastmod>2023-08-17T05:54:36.988Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/flood_fill.html</loc>
-    <lastmod>2023-08-17T05:54:35.912Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/sql_101/index.html</loc>
-    <lastmod>2023-08-17T05:54:34.863Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/about.html</loc>
-    <lastmod>2023-08-17T05:54:31.727Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/index.html</loc>
-    <lastmod>2023-08-17T05:54:30.971Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/khalido/khalido.github.io/posts/windows.html</loc>
-    <lastmod>2023-08-17T05:54:32.187Z</lastmod>
+    <loc>https://github.com/khalido/khalido.github.io/quote-clock/index.html</loc>
+    <lastmod>2023-09-21T01:03:22.211Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/histogram_max_area.html</loc>
-    <lastmod>2023-08-17T05:54:35.456Z</lastmod>
+    <lastmod>2023-09-21T01:03:21.275Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/code/advent-of-code-2015/index.html</loc>
+    <lastmod>2023-09-21T01:03:20.411Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/sql_101/index.html</loc>
+    <lastmod>2023-09-21T01:03:19.423Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/index.html</loc>
+    <lastmod>2023-09-21T01:03:16.411Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/windows.html</loc>
+    <lastmod>2023-09-21T01:03:17.211Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/khalido/khalido.github.io/posts/code/quarto_notebook_test.html</loc>
-    <lastmod>2023-08-17T05:54:36.296Z</lastmod>
+    <lastmod>2023-09-21T01:03:19.839Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/posts/algorithims/flood_fill.html</loc>
+    <lastmod>2023-09-21T01:03:20.795Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/khalido/khalido.github.io/about.html</loc>
+    <lastmod>2023-09-21T01:03:21.551Z</lastmod>
   </url>
 </urlset>

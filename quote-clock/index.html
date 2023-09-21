@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-09-11">
+
+<title>A data + code blog and assorted notes - Literary Quote Clock</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">A data + code blog and assorted notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/khalido" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/KO" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-literary-quotes" id="toc-the-literary-quotes" class="nav-link active" data-scroll-target="#the-literary-quotes">The literary quotes</a>
+  <ul class="collapse">
+  <li><a href="#spliting-up-quotes" id="toc-spliting-up-quotes" class="nav-link" data-scroll-target="#spliting-up-quotes">Spliting up quotes</a></li>
+  <li><a href="#saving-quotes-to-disk" id="toc-saving-quotes-to-disk" class="nav-link" data-scroll-target="#saving-quotes-to-disk">Saving quotes to disk</a></li>
+  <li><a href="#save-each-minute-as-a-seperate-file" id="toc-save-each-minute-as-a-seperate-file" class="nav-link" data-scroll-target="#save-each-minute-as-a-seperate-file">Save each minute as a seperate file</a></li>
+  </ul></li>
+  <li><a href="#get-current-time-and-display-quote" id="toc-get-current-time-and-display-quote" class="nav-link" data-scroll-target="#get-current-time-and-display-quote">Get current time and display quote</a></li>
+  <li><a href="#raspberry-pi-pico" id="toc-raspberry-pi-pico" class="nav-link" data-scroll-target="#raspberry-pi-pico">Raspberry Pi Pico</a></li>
+  <li><a href="#misc" id="toc-misc" class="nav-link" data-scroll-target="#misc">Misc</a>
+  <ul class="collapse">
+  <li><a href="#guardian-quotes-from-2011" id="toc-guardian-quotes-from-2011" class="nav-link" data-scroll-target="#guardian-quotes-from-2011">Guardian quotes from 2011</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Literary Quote Clock</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>A raspberry pi project, inspired by <a href="https://www.instructables.com/Literary-Clock-Made-From-E-reader/">tjaap</a>. This python notebook is looking at the basics - how to get the data, parse it, display a quote, then moves on to create a repo and put the code onto the actual hardware.</p>
+<p>The primary source for quotes is the <a href="https://www.theguardian.com/books/table/2011/apr/21/literary-clock">guardian’s user provided list</a>. This list is incomplete, and the guardian put up a bigger list in 2014 as a gsheet but thats no longer avaiable, so I found a more complete quotes list on <a href="https://github.com/JohannesNE/literature-clock/tree/master">github</a>.</p>
+<p>First up, making a list of times to check for missing times:</p>
+<div class="cell" data-execution_count="153">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a list containiner all 1,440 times</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>hour<span class="sc">:02}</span><span class="ss">:</span><span class="sc">{</span>minute<span class="sc">:02}</span><span class="ss">"</span> <span class="cf">for</span> hour <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">24</span>) <span class="cf">for</span> minute <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">60</span>)]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(times) <span class="op">==</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span>  <span class="co"># check for all 1,440 clock times</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(times[<span class="dv">55</span>:<span class="dv">65</span>])  <span class="co"># check it looks good</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['00:55', '00:56', '00:57', '00:58', '00:59', '01:00', '01:01', '01:02', '01:03', '01:04']</code></pre>
+</div>
+</div>
+<section id="the-literary-quotes" class="level2">
+<h2 class="anchored" data-anchor-id="the-literary-quotes">The literary quotes</h2>
+<p>I initial looked at the list of quotes on the guardian website from 2011, but that was really incomplete, so after some internet kungfu I moved on to a better <a href="https://github.com/JohannesNE/literature-clock">list of quotes maintained here</a>.</p>
+<p>That project already implements a literary clock, but ignoring that to make my own, here goes:</p>
+<div class="cell" data-execution_count="154">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/JohannesNE/literature-clock/master/litclock_annotated.csv"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    url, sep<span class="op">=</span><span class="st">"|"</span>, names<span class="op">=</span>[<span class="st">"time"</span>, <span class="st">"annot"</span>, <span class="st">"quote"</span>, <span class="st">"title"</span>, <span class="st">"author"</span>, <span class="st">"nsfw"</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df.sample(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="154">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">annot</th>
+<th data-quarto-table-cell-role="th">quote</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">author</th>
+<th data-quarto-table-cell-role="th">nsfw</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2854</td>
+<td>22:00</td>
+<td>ten</td>
+<td>By ten, Quoyle was drunk. The crowd was enormo...</td>
+<td>The Shipping News</td>
+<td>E. Annie Proulx</td>
+<td>unknown</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">210</td>
+<td>01:30</td>
+<td>1:30 A.M.</td>
+<td>Around 1:30 A.M. the door opened and I thought...</td>
+<td>Microserfs</td>
+<td>Douglas Coupland</td>
+<td>unknown</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1596</td>
+<td>12:00</td>
+<td>Noon</td>
+<td>The Birds begun at Four o'clock&lt;br/&gt;Their peri...</td>
+<td>The Birds Begun at Four o'clock</td>
+<td>Emily Dickinson</td>
+<td>unknown</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1878</td>
+<td>14:31</td>
+<td>thirty-one minutes past two</td>
+<td>Igor checked the time again. He didn't really;...</td>
+<td>The Vampire's Treaty</td>
+<td>Matt Shaw</td>
+<td>sfw</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Some basic data checks:</p>
+<div class="cell" data-execution_count="158">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>missing_times <span class="op">=</span> [time <span class="cf">for</span> time <span class="kw">in</span> times <span class="cf">if</span> time <span class="kw">not</span> <span class="kw">in</span> df.time.values]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(missing_times)<span class="sc">}</span><span class="ss"> time values missing: </span><span class="sc">{</span>missing_times<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>single_quote <span class="op">=</span> <span class="bu">sum</span>(df.groupby(<span class="st">"time"</span>).count().title <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>multiple_quotes <span class="op">=</span> <span class="bu">sum</span>(df.groupby(<span class="st">"time"</span>).count().title <span class="op">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>single_quote<span class="sc">}</span><span class="ss"> times have exactly 1 quote, </span><span class="sc">{</span>multiple_quotes<span class="sc">}</span><span class="ss"> times have more than 1 quote."</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> (</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    df[[<span class="st">"time"</span>, <span class="st">"title"</span>]]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">"time"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    .count()[df.groupby(<span class="st">"time"</span>).count().title <span class="op">&gt;</span> <span class="dv">6</span>]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    .plot.bar(title<span class="op">=</span><span class="st">"Times with quotes &gt; 6"</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">2</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>21 time values missing: ['02:49', '03:24', '06:03', '06:07', '06:18', '06:47', '07:41', '08:21', '10:28', '11:16', '11:46', '12:31', '13:19', '13:36', '14:23', '15:31', '17:46', '18:14', '18:44', '21:06', '21:14']
+
+886 times have exactly 1 quote, 533 times have more than 1 quote.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>So we now have a dataframe full of quotes. I’ll deal with the 21 missing quotes later.</p>
+<p>The gthub repo produced a folder full of json files, one for each time stamp, so I could just re-use that, but whats the fun of that.</p>
+<section id="spliting-up-quotes" class="level3">
+<h3 class="anchored" data-anchor-id="spliting-up-quotes">Spliting up quotes</h3>
+<p>Ideally, we want the current time in the quote highlighted. The csv file has a col <code>annot</code> which is the time part of the quote string. Initially I tried to use regex to split the string, but since the time is in so many different formats it has to be done manually, hence the <code>annot</code> col.</p>
+<p>The time can contain special characters like <code>[]</code> so <a href="https://docs.python.org/3/library/re.html?highlight=escape#re.escape">re.escape</a> fixes that. I had to use re.split instead of str.split here as only re.split has a ignorecase feature.</p>
+<div class="cell" data-execution_count="159">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> split_quote(row):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""adds a prefix and suffix to the quote."""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    prefix, suffix <span class="op">=</span> re.split(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        re.escape(row.annot), row.quote, maxsplit<span class="op">=</span><span class="dv">1</span>, flags<span class="op">=</span>re.IGNORECASE</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    row[<span class="st">"prefix"</span>] <span class="op">=</span> prefix</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    row[<span class="st">"suffix"</span>] <span class="op">=</span> suffix</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> row</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.<span class="bu">apply</span>(split_quote, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df.sample(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="159">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">annot</th>
+<th data-quarto-table-cell-role="th">quote</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">author</th>
+<th data-quarto-table-cell-role="th">nsfw</th>
+<th data-quarto-table-cell-role="th">prefix</th>
+<th data-quarto-table-cell-role="th">suffix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2453</td>
+<td>19:00</td>
+<td>seven o’clock</td>
+<td>“Yes, seven o’clock. I will bring dessert.” Sm...</td>
+<td>The Catacombs</td>
+<td>Jeremy Bates</td>
+<td>unknown</td>
+<td>“Yes,</td>
+<td>. I will bring dessert.” Smiling in her sad-ha...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">612</td>
+<td>05:00</td>
+<td>five in the morning</td>
+<td>I did Danièle’s math in my head. “If we start ...</td>
+<td>The Catacombs</td>
+<td>Jeremy Bates</td>
+<td>unknown</td>
+<td>I did Danièle’s math in my head. “If we start ...</td>
+<td>. Seven hours back, it won’t be noon until we ...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">685</td>
+<td>05:42</td>
+<td>eighteen minutes to six</td>
+<td>At eighteen minutes to six, they blew the wall...</td>
+<td>A Gentleman's Game</td>
+<td>Greg Rucka</td>
+<td>sfw</td>
+<td>At</td>
+<td>, they blew the wall, and even then, it was al...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>I can now display the quote with the time highlighted, an example below in markdown format:</p>
+<div class="cell" data-execution_count="161">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>row <span class="op">=</span> df.iloc[<span class="dv">100</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>row<span class="sc">.</span>prefix<span class="sc">}</span><span class="ss">**</span><span class="sc">{</span>row<span class="sc">.</span>annot<span class="sc">}</span><span class="ss">**</span><span class="sc">{</span>row<span class="sc">.</span>suffix<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="161">
+<pre><code>'It was **half-past twelve** when I returned to the Albany as a last desperate resort. The scene of my disaster was much as I had left it. The baccarat-counters still strewed the table, with the empty glasses and the loaded ash-trays. A window had been opened to let the smoke out, and was letting in the fog instead.'</code></pre>
+</div>
+</div>
+</section>
+<section id="saving-quotes-to-disk" class="level3">
+<h3 class="anchored" data-anchor-id="saving-quotes-to-disk">Saving quotes to disk</h3>
+<p>First up, saving a single json object containing all the quotes, which is easy to use:</p>
+<div class="cell" data-execution_count="176">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># returns a string representing the json</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>quotes_json <span class="op">=</span> df.groupby(<span class="st">"time"</span>).agg(<span class="bu">list</span>).to_json(orient<span class="op">=</span><span class="st">"index"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># writes the json to disk</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"time"</span>).agg(<span class="bu">list</span>).to_json(<span class="st">"quotes.json"</span>, orient<span class="op">=</span><span class="st">"index"</span>, compression<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># read the quotes from disk</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"quotes.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    quotes <span class="op">=</span> json.load(f)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(quotes)<span class="sc">:,}</span><span class="ss"> keys which look like: </span><span class="sc">{</span><span class="bu">list</span>(quotes.keys())[<span class="dv">40</span>:<span class="dv">44</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>quotes[<span class="st">"01:40"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1,419 keys which look like: ['00:40', '00:41', '00:42', '00:43']</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="176">
+<pre><code>{'annot': ['one-forty am'],
+ 'quote': ['March twelfth, one-forty am, she leaves a group of drinking buddies to catch a bus home. She never makes it.'],
+ 'title': ['Bones to Ashes'],
+ 'author': ['Kathy Reichs'],
+ 'nsfw': ['unknown'],
+ 'prefix': ['March twelfth, '],
+ 'suffix': [', she leaves a group of drinking buddies to catch a bus home. She never makes it.']}</code></pre>
+</div>
+</div>
+</section>
+<section id="save-each-minute-as-a-seperate-file" class="level3">
+<h3 class="anchored" data-anchor-id="save-each-minute-as-a-seperate-file">Save each minute as a seperate file</h3>
+<p>I’m using a raspberry pi pico w, it doesn’t have enough memory to contain the ~2k quotes. So I’m going to write a json file for every minute, and open and close each file as needed.</p>
+<p>I’m keeping only the columns needed to save on diskspace:</p>
+<div class="cell" data-execution_count="186">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> df.time.unique():</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    df[[<span class="st">"time"</span>, <span class="st">"annot"</span>, <span class="st">"prefix"</span>, <span class="st">"suffix"</span>, <span class="st">"title"</span>, <span class="st">"author"</span>]].query(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"time==@key"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    ).groupby(<span class="st">"time"</span>).agg(<span class="bu">list</span>).to_json(<span class="ss">f"quotes/</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">.json"</span>, orient<span class="op">=</span><span class="st">"index"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking the total size of the many quote files</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>quotes_size <span class="op">=</span> (</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span>([os.path.getsize(<span class="ss">f"quotes/</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">"</span>) <span class="cf">for</span> f <span class="kw">in</span> os.listdir(<span class="st">"quotes"</span>)]) <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">3</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(os.listdir(<span class="st">'quotes'</span>))<span class="sc">:,}</span><span class="ss"> json files total </span><span class="sc">{</span>quotes_size<span class="sc">:.2f}</span><span class="ss">kb"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="186">
+<pre><code>'1,419 json files total 931.76kb'</code></pre>
+</div>
+</div>
+<p>I can compress these to save further on space, which I’ll get to later if needed. Its nice to have a human readable json string rather than a binary object on the pico for future poking around.</p>
+</section>
+</section>
+<section id="get-current-time-and-display-quote" class="level2">
+<h2 class="anchored" data-anchor-id="get-current-time-and-display-quote">Get current time and display quote</h2>
+<p>Micropython has a <a href="https://docs.micropython.org/en/latest/library/time.html">time</a> module, which is a subset of the <a href="https://docs.python.org/3/library/time.html">built in python time library</a>. The pi’s clock needs to be synced on boot with a timeserver, leaving that for the future…</p>
+<p>Right now, I get the current time, than open the json file for that timestamp, select a random quote from it and return it.</p>
+<div class="cell" data-execution_count="217">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_time():</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""returns current time in 00:00 format"""</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    time_now <span class="op">=</span> time.localtime()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>time_now<span class="sc">.</span>tm_hour<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>time_now<span class="sc">.</span>tm_min<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_quote(time_str<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""returns a dict containing a single quote for a given time"""</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> time_str <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        time_str <span class="op">=</span> get_time()</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># open json file</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f"quotes/</span><span class="sc">{</span>time_str<span class="sc">}</span><span class="ss">.json"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        quote <span class="op">=</span> json.load(f)[time_str]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> random.randint(<span class="dv">0</span>, <span class="bu">len</span>(quote[<span class="st">"title"</span>]) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {key: quote[key][i] <span class="cf">for</span> key <span class="kw">in</span> quote.keys()}</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>quote <span class="op">=</span> get_quote()</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"quote dict keys: </span><span class="sc">{</span>quote<span class="sc">.</span>keys()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>quote[<span class="st">'prefix'</span>]<span class="sc">}</span><span class="ss">**</span><span class="sc">{</span>quote[<span class="st">'annot'</span>]<span class="sc">}</span><span class="ss">**</span><span class="sc">{</span>quote[<span class="st">'suffix'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="ss">f"</span><span class="sc">{</span>quote[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>quote[<span class="st">'author'</span>]<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>quote dict keys: dict_keys(['annot', 'prefix', 'suffix', 'title', 'author'])
+
+It was now **eight minutes to eleven**, and he began to feel rather cross and impatient. There was nothing to do in the big, ugly, stately room into which he had been shown.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="217">
+<pre><code>'From Out of the Vasty Deep by Marie Belloc Lowndes'</code></pre>
+</div>
+</div>
+<p>That seems to be working well, so now I should be able to assemble the pieces and display this on a raspberry pico display.</p>
+</section>
+<section id="raspberry-pi-pico" class="level2">
+<h2 class="anchored" data-anchor-id="raspberry-pi-pico">Raspberry Pi Pico</h2>
+<p>Allright, now that I have the basics ready to go, here goes putting this on a pi pico. First up, we need a github repo.</p>
+</section>
+<section id="misc" class="level2">
+<h2 class="anchored" data-anchor-id="misc">Misc</h2>
+<p>Things not needed anymore, left in case they are useful in the future.</p>
+<section id="guardian-quotes-from-2011" class="level3">
+<h3 class="anchored" data-anchor-id="guardian-quotes-from-2011">Guardian quotes from 2011</h3>
+<p>Guardian clock quotes from 2011, left below as a pandas exercise in fetching a table from a html page and some basic transformations to be able to use it.</p>
+<div class="cell" data-execution_count="677">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>clock_url <span class="op">=</span> <span class="st">"https://www.theguardian.com/books/table/2011/apr/21/literary-clock"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_quotes <span class="op">=</span> (</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    pd.read_html(clock_url)[<span class="dv">0</span>]  <span class="co"># get first table</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    .rename(</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>{</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Time of quote"</span>: <span class="st">"time"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Quote"</span>: <span class="st">"quote"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Title of book"</span>: <span class="st">"title"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Author"</span>: <span class="st">"author"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    .sort_values(by<span class="op">=</span><span class="st">"time"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    .drop(columns<span class="op">=</span>[<span class="st">"Your username"</span>])  <span class="co"># no need for this col</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    .dropna(subset<span class="op">=</span>[<span class="st">"quote"</span>])  <span class="co"># drop blank rows at end</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># fix some wonky time strings</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>df_quotes.time <span class="op">=</span> df_quotes.time.<span class="bu">str</span>.replace(<span class="st">"."</span>, <span class="st">":"</span>)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>df_quotes<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> quotes, so missing a lot!"</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>df_quotes.sample(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(935, 4) quotes, so missing a lot!</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="677">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">quote</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">author</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">204</td>
+<td>07:10:00h</td>
+<td>A search in Bradshaw informed me that a train ...</td>
+<td>The 39 Steps</td>
+<td>John Buchan</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">409</td>
+<td>11:15:00h</td>
+<td>The first time I saw them it was around eleven...</td>
+<td>Where I'm Calling From</td>
+<td>Raymond Carver</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>There is a 2014 Guardlian list, but looks like that was a google sheet which they have now taken down.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
